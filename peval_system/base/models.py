@@ -224,4 +224,7 @@ class FacultyServiceRecord(models.Model):
     number_students = models.IntegerField(null=True, blank=True)
     comments_remarks = models.CharField(max_length=400)
 
+    def __str__(self):
+        return '{} {} {} {}'.format(self.course_code,self.semester,self.school_year)
+
 
