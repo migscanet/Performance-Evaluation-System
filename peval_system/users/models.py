@@ -92,10 +92,10 @@ class UserManager(BaseUserManager):
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
-            email=email,
-            is_staff=is_staff, 
-            is_active=True,
-            is_superuser=is_superuser, 
+            email=email,      
+            is_staff=is_staff,
+            is_superuser=is_superuser,      
+            is_active=True,            
             last_login=now,
             date_joined=now, 
             **extra_fields
@@ -113,7 +113,7 @@ class UserManager(BaseUserManager):
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
-    user_id = models.UUIDField(primary_key=True, unique=True)
+    #user_id = models.UUIDField(primary_key=True, unique=True)
     #Classification
     department = models.CharField(max_length=240, choices=DEPARTMENTCHOICES, default=DEPARTMENTCHOICES[0])
     faculty_rank = models.CharField(max_length=20, choices=FACULTYRANKCHOICES, default=FACULTYRANKCHOICES[0])
@@ -122,6 +122,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     faculty_status = models.CharField(max_length=20, choices=FACULTYSTATUSCHOICES, default=FACULTYSTATUSCHOICES[0])
 
     #boolean
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=True)
+    last_login = models.DateTimeField(null=True, blank=True)
+    date_joined = models.DateTimeField(auto_now_add=True)
     is_Faculty = models.BooleanField(default=True)
     is_UnitHead = models.BooleanField(default=False)
     is_DepartmentHead = models.BooleanField(default=False) 
@@ -143,7 +147,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #Contact Details
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     landline_number = models.CharField(max_length=20, null=True, blank=True)
-    up_email = models.EmailField(max_length=254, unique=True)
+    email = models.EmailField(max_length=254, unique=True)
     alternative_email = models.EmailField(max_length=254, unique=True)
 
     #Emergency Contact Details
@@ -152,8 +156,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     emergency_contact_birthdate = models.DateField(null=True, blank=True)
     emergency_contact_relationship = models.CharField(max_length=20, null=True, blank=True)
 
-    USERNAME_FIELD = 'up_email'
-    EMAIL_FIELD = 'up_email'
+    USERNAME_FIELD = 'email'
+    EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()

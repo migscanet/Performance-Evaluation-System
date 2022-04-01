@@ -5,7 +5,7 @@ from . models import User, FacultyProfile, UnitHeadProfile, DepartmentHeadProfil
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = [
-        'up_email', 
+        'email', 
         'first_name', 
         'last_name', 
         'is_Faculty', 
