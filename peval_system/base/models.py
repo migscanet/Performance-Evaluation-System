@@ -59,7 +59,8 @@ ACCOMPLISHMENTREPORTCHOICES=(
     ('8', 'Planned Activities and Announcements')
 )
 
-class AddEducationalAttainment(models.Model):
+class EducationalAttainment(models.Model):
+    user = models.ForeignKey(User, related_name='EducationalAttainment', on_delete = models.CASCADE)
     institution = models.CharField(max_length=240)
     degree = models.CharField(max_length=240)
     certification = models.CharField(max_length=240)
@@ -73,10 +74,11 @@ class AddEducationalAttainment(models.Model):
     is_verified = models.BooleanField(default=False)
     comments_remarks = models.CharField(max_length=400)
 
-class AddWorkExperience(models.Model):
-    is_within = models.BooleanField(default=False)
-    employer_name = models.CharField(max_length=240)
+class WorkExperience(models.Model):
+    user = models.ForeignKey(User, related_name='WorkExperience', on_delete = models.CASCADE)
     position = models.CharField(max_length=240)
+    employer_name = models.CharField(max_length=240)
+    is_within = models.BooleanField(default=False)    
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     #Check if max_length should be bigger
@@ -86,32 +88,33 @@ class AddWorkExperience(models.Model):
     is_verified = models.BooleanField(default=False)
     comments_remarks = models.CharField(max_length=400)
 
-class AddAccomplishmentsEvents(models.Model):
-    user = models.ForeignKey(User, related_name='addAccomplishmentsEvents', on_delete = models.CASCADE)
+class AccomplishmentsEvents(models.Model):
+    user = models.ForeignKey(User, related_name='AccomplishmentsEvents', on_delete = models.CASCADE)
     accomplishment_title = models.CharField(max_length=240)
     type = models.CharField(max_length=240, choices=ACCOMPLISHMENTREPORTCHOICES, default=ACCOMPLISHMENTREPORTCHOICES[0])
     description = models.CharField(max_length=500)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     date_created = models.DateField(auto_now_add=True)
-    image = models.ImageField()
-    comments_remarks = models.CharField(max_length=400)
+    proof = models.FileField(upload_to ='uploads/')
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
+    comments_remarks = models.CharField(max_length=400)
 
-class AddPublications(models.Model):
-    user = models.ForeignKey(User, related_name='addPublications', on_delete = models.CASCADE)
+class Publications(models.Model):
+    user = models.ForeignKey(User, related_name='Publications', on_delete = models.CASCADE)
     is_dpsm = models.BooleanField(default=False)
     publication_name = models.CharField(max_length=240)
     citation = models.CharField(max_length=240)
     url = models.URLField(max_length = 240)
     date_published = models.DateField(null=True, blank=True)
     # proof = models.FileField(upload_to ='uploads/')
-    is_approved = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+
+    co_author_DPSM = models.ManyToManyField(User)
+    #co_author_nonDPSM = models.CharField(max_length=240)
     publication_type = models.CharField(max_length=240, choices=PUBLICATIONTYPECHOICES, default=PUBLICATIONTYPECHOICES[0])
     conference_name = models.CharField(max_length=240)
+
     publisher_name = models.CharField(max_length=240)
     publisher_type = models.CharField(max_length=240, choices=PUBLISHERTYPECHOICES, default=PUBLISHERTYPECHOICES[0])
     publisher_location = models.CharField(max_length=20, choices=LOCATIONPUBLISHERCHOICES, default=LOCATIONPUBLISHERCHOICES[0])
@@ -119,24 +122,61 @@ class AddPublications(models.Model):
     publication_url = models.URLField(max_length=250)
     publication_doi = models.CharField(max_length=240)
     publication_isbn = models.CharField(max_length=240)
+
     is_isi = models.BooleanField(default=False)
     is_elseviers_scopus = models.BooleanField(default=False)
     is_ched_recognized = models.BooleanField(default=False)
     other_collection = models.CharField(max_length=240)
     is_funded_up_gaa = models.BooleanField(default=False)
     uiob = models.CharField(max_length=500)
+
     proof_publication = models.FileField(upload_to ='uploads/')
     proof_utilization = models.FileField(upload_to ='uploads/')
     is_presented = models.BooleanField(default=False)
 
+    is_approved = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    comments_remarks = models.CharField(max_length=400)
+
+class ResearchGrants(models.Model):
+    user = models.ForeignKey(User, related_name='ResearchGrants', on_delete = models.CASCADE)
+    co_author_DPSM = models.ManyToManyField(User)
+    #co_author_nonDPSM = models.CharField(max_length=240)
+    is_dpsm = models.BooleanField(default=False)
+    research_name = models.CharField(max_length=240)
+    sponsor_name = models.CharField(max_length=240)
+    grant_amount = models.CharField(max_length=240)
+    project_start_date = models.DateField(null=True, blank = True)
+    project_end_date = models.DateField(null=True, blank = True)
+    actual_start_date = models.DateField(null=True, blank=True)
+    actual_end_date = models.DateField(null=True, blank=True)
+    research_progress = models.CharField(max_length=240)
+
+    proof = models.FileField(upload_to ='uploads/')
+    is_approved = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    comments_remarks = models.CharField(max_length=400)
 
 
-class AddTrainingSeminars(models.Model):
+class LicensureExam(models.Model):
+    user = models.ForeignKey(User, related_name='LicensureExam', on_delete = models.CASCADE)
+    exam_name = models.CharField(max_length=240)
+    rank = models.CharField(max_length=240)
+    license_number = models.CharField(max_length=20)
+    date_exam = models.DateField(null=True, blank=True)
+
+    proof = models.FileField(upload_to ='uploads/')
+    is_approved = models.BooleanField(default=False)
+    is_verified = models.BooleanField(default=False)
+    comments_remarks = models.CharField(max_length=400)
+
+class TrainingSeminars(models.Model):
     training_name = models.CharField(max_length=240)
     role = models.CharField(max_length=240)
     remarks = models.CharField(max_length=240)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
+
     proof = models.FileField(upload_to ='uploads/')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
@@ -157,33 +197,10 @@ class AddTrainingSeminars(models.Model):
 #     is_verified = models.BooleanField(default=False)
 #     comments_remarks = models.CharField(max_length=400)
 
-class AddResearchGrants(models.Model):
-    user = models.ForeignKey(User, related_name='addResearchGrants', on_delete = models.CASCADE)
-    is_dpsm = models.BooleanField(default=False)
-    research_name = models.CharField(max_length=240)
-    sponsor_name = models.CharField(max_length=240)
-    grant_amount = models.CharField(max_length=240)
-    project_start_date = models.DateField(null=True, blank = True)
-    project_end_date = models.DateField(null=True, blank = True)
-    actual_start_date = models.DateField(null=True, blank=True)
-    actual_end_date = models.DateField(null=True, blank=True)
-    research_progress = models.CharField(max_length=240)
-    is_approved = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
 
-class AddLicensureExam(models.Model):
-    exam_name = models.CharField(max_length=240)
-    rank = models.CharField(max_length=240)
-    license_number = models.CharField(max_length=20)
-    date_exam = models.DateField(null=True, blank=True)
-    proof = models.FileField(upload_to ='uploads/')
-    is_approved = models.BooleanField(default=False)
-    is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
 
-class AddConferenceWorkshops(models.Model):
-    user = models.ForeignKey(User, related_name='addConferenceWorkshops', on_delete = models.CASCADE)
+class ConferenceWorkshops(models.Model):
+    user = models.ForeignKey(User, related_name='ConferenceWorkshops', on_delete = models.CASCADE)
     event_name = models.CharField(max_length=240)
     paper_title = models.CharField(max_length=240)
     presentation_type = models.CharField(max_length=20, choices=PRESENTATIONTYPECHOICES, default=PRESENTATIONTYPECHOICES[0])
@@ -196,25 +213,29 @@ class AddConferenceWorkshops(models.Model):
     presentation_date = models.DateField(null=True, blank=True)
     fund_source = models.CharField(max_length=240)
     uriob = models.CharField(max_length=500)
+
+    proof = models.FileField(upload_to ='uploads/')
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     comments_remarks = models.CharField(max_length=500)
 
-class AddExtensionServices(models.Model):
-    user = models.ForeignKey(User, related_name='addExtensionServices', on_delete=models.CASCADE)
+class ExtensionServices(models.Model):
+    user = models.ForeignKey(User, related_name='ExtensionServices', on_delete=models.CASCADE)
     training_title = models.CharField(max_length=240)
     venue = models.CharField(max_length=240)
     date = models.DateField(null=True, blank =True)
     number_participants = models.IntegerField(null=True, blank=True)
     target_beneficiary = models.CharField(max_length=240)
     fund_source = models.CharField(max_length=240)
+
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
-    attached_evaluation = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/')
     comments_remarks = models.CharField(max_length=400)
 
 class FacultyServiceRecord(models.Model):
     #Foreignkey of SET
+    #set_score = models.DecimalField(decimal_places=2, null=True, blank=True)
     course_code = models.CharField(max_length=5)
     section = models.CharField(max_length=4)
     semester = models.CharField(max_length=10, choices=SEMESTERCHOICES, default=SEMESTERCHOICES[0])
