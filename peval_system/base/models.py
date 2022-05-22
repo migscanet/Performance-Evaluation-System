@@ -69,10 +69,10 @@ class EducationalAttainment(models.Model):
     degree_type = models.CharField(max_length=10)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/educatt_proof/')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 class WorkExperience(models.Model):
     user = models.ForeignKey(User, related_name='WorkExperience', on_delete = models.CASCADE)
@@ -83,10 +83,10 @@ class WorkExperience(models.Model):
     end_date = models.DateField(null=True, blank=True)
     #Check if max_length should be bigger
     description = models.CharField(max_length=500)
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/workexp/')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 class AccomplishmentsEvents(models.Model):
     user = models.ForeignKey(User, related_name='AccomplishmentsEvents', on_delete = models.CASCADE)
@@ -96,10 +96,10 @@ class AccomplishmentsEvents(models.Model):
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
     date_created = models.DateField(auto_now_add=True)
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/acc_events/')
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 class Publications(models.Model):
     user = models.ForeignKey(User, related_name='Publications', on_delete = models.CASCADE)
@@ -130,13 +130,13 @@ class Publications(models.Model):
     is_funded_up_gaa = models.BooleanField(default=False)
     uiob = models.CharField(max_length=500)
 
-    proof_publication = models.FileField(upload_to ='uploads/')
-    proof_utilization = models.FileField(upload_to ='uploads/')
+    proof_publication = models.FileField(upload_to ='uploads/pubs/pub')
+    proof_utilization = models.FileField(upload_to ='uploads/util')
     is_presented = models.BooleanField(default=False)
 
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 class ResearchGrants(models.Model):
     user = models.ForeignKey(User, related_name='ResearchGrants', on_delete = models.CASCADE)
@@ -152,10 +152,10 @@ class ResearchGrants(models.Model):
     actual_end_date = models.DateField(null=True, blank=True)
     research_progress = models.CharField(max_length=240)
 
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/research_grants')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 
 class LicensureExam(models.Model):
@@ -165,22 +165,23 @@ class LicensureExam(models.Model):
     license_number = models.CharField(max_length=20)
     date_exam = models.DateField(null=True, blank=True)
 
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/lic_exam')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
     comments_remarks = models.CharField(max_length=400)
 
 class TrainingSeminars(models.Model):
+    user = models.ForeignKey(User, related_name='TrainingSeminars', on_delete = models.CASCADE)
     training_name = models.CharField(max_length=240)
     role = models.CharField(max_length=240)
     remarks = models.CharField(max_length=240)
     start_date = models.DateField(null=True, blank=True)
     end_date = models.DateField(null=True, blank=True)
 
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/train_sem')
     is_approved = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
 # class AddAccomplishments(models.Model):
 #     position = models.CharField(max_length=240)
@@ -214,7 +215,7 @@ class ConferenceWorkshops(models.Model):
     fund_source = models.CharField(max_length=240)
     uriob = models.CharField(max_length=500)
 
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/conf_work')
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
     comments_remarks = models.CharField(max_length=500)
@@ -230,7 +231,7 @@ class ExtensionServices(models.Model):
 
     is_verified = models.BooleanField(default=False)
     is_approved = models.BooleanField(default=False)
-    proof = models.FileField(upload_to ='uploads/')
+    proof = models.FileField(upload_to ='uploads/ext_serv')
     comments_remarks = models.CharField(max_length=400)
 
 class FacultyServiceRecord(models.Model):
@@ -243,7 +244,7 @@ class FacultyServiceRecord(models.Model):
     days = models.CharField(max_length=10, choices=DAYCHOICES, default=DAYCHOICES[0])
     time = models.TimeField(null=True, blank=True)
     number_students = models.IntegerField(null=True, blank=True)
-    comments_remarks = models.CharField(max_length=400)
+    comments_remarks = models.CharField(max_length=400, blank=True)
 
     def __str__(self):
         return '{} {} {} {}'.format(self.course_code,self.semester,self.school_year)
