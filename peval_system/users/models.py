@@ -93,7 +93,7 @@ ROLECHOICES=(
 # maglagay ng isApproved for DPSM head, kulang kasi kung sa unit head lang
 #add boolean for faculty if what dpsm unit siya ehehehe
 class UserManager(BaseUserManager):
-    def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
+    def create_user(self, email, is_staff, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         now = timezone.now()
@@ -101,25 +101,30 @@ class UserManager(BaseUserManager):
         user = self.model(
             email=email,      
             is_staff=is_staff,
-            is_superuser=is_superuser,      
+            # is_superuser=is_superuser,      
             is_active=True,            
             last_login=now,
             date_joined=now, 
-            **extra_fields
+            # **extra_fields
         )
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password, **extra_fields):
-        return self._create_user(email, password, False, False, **extra_fields)
+    # def create_user(self, email, password, **extra_fields):
+    #     return self._create_user(email, password, False, False, **extra_fields)
 
     def create_superuser(self, email, password, **extra_fields):
-        user=self._create_user(email, password, True, True, **extra_fields)
+        user=self.create_user(email, password, True, **extra_fields)
+        user.is_superuser = True
         user.save(using=self._db)
         return user
 
 class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(max_length=254, unique=True)
+    alternative_email = models.EmailField(max_length=254, unique=True)
+
+    
     #user_id = models.UUIDField(primary_key=True, unique=True)
     #Classification
     department = models.CharField(max_length=240, choices=DEPARTMENTCHOICES, default=DEPARTMENTCHOICES[0])
@@ -156,8 +161,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     #Contact Details
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     landline_number = models.CharField(max_length=20, null=True, blank=True)
-    email = models.EmailField(max_length=254, unique=True)
-    alternative_email = models.EmailField(max_length=254, unique=True)
+
 
     #Emergency Contact Details
     emergency_contact_name = models.CharField(max_length=254, null=True, blank=True)
@@ -166,7 +170,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     emergency_contact_relationship = models.CharField(max_length=20, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    EMAIL_FIELD = 'email'
+    # EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     objects = UserManager()

@@ -13,6 +13,7 @@ app_name = 'base'
 
 urlpatterns =[
     path("profile", views.view_profile, name='view_profile'),
+    path("admin_dash", views.admin_dash, name='admin_dash'),
     
     path("add_educ_att", views.add_educ_att, name='add_educ_att'),
     path("add_workexp", views.add_workexp, name='add_workexp'),
