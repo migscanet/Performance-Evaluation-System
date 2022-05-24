@@ -47,9 +47,18 @@ def admin_dash(request):
     conf_work = ConferenceWorkshops.objects.all()
     ext_serv = ExtensionServices.objects.all()
     faculty_serv_rec = FacultyServiceRecord.objects.all()
+    create_user_form = CreateUserForm()
+    educ_form = EducAttForm()
+    work_exp_form = WorkExpForm()
+    acc_events_form = AccEventsForm()
+    pub_form = PubForm()
+    research_grants_form = ResearchGrantsForm()
+    lic_exam_form = LicExamForm()
+    train_sem_form = TrainSemForm()
+    conf_work_form = ConfWorkForm()
+    ext_serv_form = ExtServForm()
+    faculty_serv_rec_form = FacultyServRecForm()
 
-    #myFilter = RequestFilter(request.GET, queryset=requests)
-    #request = myFilter.qs
 
     context = {
         'EducAtt' : educ_att,
@@ -61,7 +70,18 @@ def admin_dash(request):
         'TrainSem' : train_sem,
         'ConfWork' : conf_work,    
         'ExtServ' : ext_serv,    
-        'FacServRec' : faculty_serv_rec,    
+        'FacServRec' : faculty_serv_rec,
+        'create_user_form': create_user_form,
+        'educ_form': educ_form,
+        'work_exp_form': work_exp_form,
+        'acc_events_form': acc_events_form,
+        'pub_form': pub_form,
+        'research_grants_form': research_grants_form,
+        'lic_exam_form': lic_exam_form,
+        'train_sem_form': train_sem_form,
+        'conf_work_form': conf_work_form,
+        'ext_serv_form': ext_serv_form,
+        'faculty_serv_rec_form': faculty_serv_rec_form
     }
     return render(request, 'admin_dash.html', context)
 

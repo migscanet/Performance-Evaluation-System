@@ -1,5 +1,8 @@
 <html>
+    {%load crispy_forms_tags%}
     <body>
         <h1>This is unit head</h1>
+
+        {{create_user_form|crispy}}
     </body>
 </html>
