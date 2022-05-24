@@ -30,29 +30,50 @@ def change_password(request):
     context = {}
     return HttpResponse(template.render(context, request))
 
-# def faculty_login(request):
-#     if request.method == 'POST':
-        #form = GenericLoginForm(request.POST)
-        # if form.is_valid():
-        #     username = request.POST['username']
-        #     password = request.POST['password']
-        #     user = authenticate(request, username=username, password=password)
-        #     if user is not None:
-        #         user_type = User.objects.filter(user=user)
-        #         print("user ok. at extended lookup now: ", len(user_type))
-        #         if len(User)>=1:
-        #             print("is faculty? ", user_type[0].is_Faculty)
-        #             if user_type[0].is_Faculty:
-        #                 #get approval status
-        #                 faculty_obj = User.objects.get(user=user)
-        #                 approved = faculty_obj.is_approved
-        #                 if approved:
-        #                     login(request, user)
-        #                     messages.success(request, "Patient Login Sucess!")
-        #                     return redirect(index)
-        # print("Invalid login")
-        # pass
-    # template = loader.get_template('patient_login.html')
-    # context = {}
-    # context['form'] = GenericLoginForm()
-    # return HttpResponse(template.render(context, request))
+def faculty_login(request):
+     if request.method == 'POST':
+        form = GenericLoginForm(request.POST)
+        if form.is_valid():
+             username = request.POST['username']
+             password = request.POST['password']
+             user = authenticate(request, username=username, password=password)
+             if user is not None:
+                 user_type = User.objects.filter(user=user)
+                 print("user ok. at extended lookup now: ", len(user_type))
+                 if len(User)>=1:
+                     print("is faculty? ", user_type[0].is_Faculty)
+                     if user_type[0].is_Faculty:
+                         #get approval status
+                         faculty_obj = User.objects.get(user=user)
+                         approved = faculty_obj.is_approved
+                         if approved:
+                             login(request, user)
+                             messages.success(request, "Patient Login Sucess!")
+                             return redirect(index)
+        print("Invalid login")
+        pass
+     template = loader.get_template('patient_login.html')
+     context = {}
+     context['form'] = GenericLoginForm()
+     return HttpResponse(template.render(context, request))
+
+
+#----STAFF VIEWS----
+
+def staff_base(request):
+    template = loader.get_template('PES_STAFF_BASE.html')
+    context = {}
+    #context['form'] = GenericLoginForm()
+    return HttpResponse(template.render(context, request))   
+
+def staff_add_faculty(request):
+    template = loader.get_template('PES_STAFF_add_faculty.html')
+    context = {}
+    #context['form'] = GenericLoginForm()
+    return HttpResponse(template.render(context, request))   
+
+def staff_add_faculty_load(request):
+    template = loader.get_template('PES_STAFF_FacultyLoad.html')
+    context = {}
+    #context['form'] = GenericLoginForm()
+    return HttpResponse(template.render(context, request))       

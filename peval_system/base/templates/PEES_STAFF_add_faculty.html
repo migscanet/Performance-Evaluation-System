@@ -1,0 +1,185 @@
+{% load static %}
+
+<!DOCTYPE html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <nav class="navbar-custom">
+        <img src = "https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/University_of_the_Philippines_Manila_Seal.svg/1200px-University_of_the_Philippines_Manila_Seal.svg.png" style = "width: 70px; height: 70px; margin-left: 5px; margin-top: 5px; margin-bottom: 5px;" >  
+        <h2 id = "PES_navbar_label">University of the Philippines Manila</h1>
+        <br>
+    </nav>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div id="mySidebar" class="sidebar">
+
+    <div class = "sidebar_inner">
+        <a class = "sidebarButton">Faculty</a>
+        <a class = "sidebarButton">Student</a>
+        <a class = "sidebarButton">Alumni</a>
+        <a class = "sidebarButton">Department</a>
+        <a class = "PES_exitpage">Exit</a>
+    </div>        
+</div>
+
+
+
+<div id = "PES_add_faculty_fields" class = "form-group">
+    <br>
+    <h3 class = "faculty_Label">PERSONAL INFORMATION</h3>
+    <br>
+    <br>
+    
+        <form>
+            {% csrf_token %}
+            <!----ROW 1-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_Surname">Last Name</label>
+                    <input type="email" class="form-control"  id = "faculty_Surname">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_FirstName">First Name</label>
+                    <input type="text" class="form-control"  id = "faculty_FirstName">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Surname">Middle Name</label>
+                    <input type="text" class="form-control"  id = "faculty_LastName">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Suffix">Suffix</label>
+                    <input type="select" class="form-control"  id = "faculty_Suffix">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Sex">Sex</label>
+                    <input type="select" class="form-control"  id = "faculty_Sex">
+                </div>
+            </div>
+
+            <!----ROW 2-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_DateOfBirth">Date of Birth</label>
+                    <input type="text" class="form-control"  id = "faculty_Date_of_birth">
+                </div>
+                <div class="col">
+                    <label for="faculty_PlaceOfBirth">Place of Birth</label>
+                    <input type="text" class="form-control"  id = "faculty_PlaceOfBirth">
+                </div>
+                <div class="col">
+                    <label for="faculty_EmailAddress">Email Address</label>
+                    <input type="email" class="form-control"  id = "faculty_EmailAddress">
+                </div>
+            </div>
+            <!----ROW 3-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_Religion">Religion</label>
+                    <input type="text" class="form-control"  id = "faculty_Religion">
+                </div>
+                <div class="col">
+                    <label for="faculty_CivilStatus">Civil Status</label>
+                    <input type="text" class="form-control"  id = "faculty_CivilStatus">
+                </div>
+                <div class="col">
+                    <label for="faculty_ContactNumber">Contact Number</label>
+                    <input type="number" class="form-control"  id = "faculty_ContactNumber">
+                </div>
+            </div>
+            <!----ROW 4-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_PresentAddress">Present Address</label>
+                    <input type="text" class="form-control"  id = "faculty_PresentAddress">
+                </div>
+                <div class="col">
+                    <label for="faculty_PermanentAddress">Permanent Address</label>
+                    <input type="text" class="form-control"  id = "faculty_PermanentAddress">
+                </div>
+            </div>
+
+            <!----ROW 5-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_ContactPerson">Person to Contact in case of Emergency</label>
+                    <input type="text" class="form-control"  id = "faculty_ContactPerson">
+                </div>
+                <div class="col">
+                    <label for="faculty_ContactPersonNumber">Contact Number</label>
+                    <input type="number" class="form-control"  id = "faculty_ContactPersonNumber">
+                </div>
+                <div class="col">
+                    <label for="faculty_NameOfDependent">Name of Dependent (if any)</label>
+                    <input type="text" class="form-control"  id = "faculty_NameOfDependent">
+                </div>
+                <div class="col">
+                    <label for="faculty_DateOfBirthOfDependent">Date of Birth of Dependent (Dependent)</label>
+                    <input type="text" class="form-control"  id = "faculty_DateOfBirthOfDependent">
+                </div>
+            </div>
+
+            <!----ROW 6-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_DependentRelationship">Relation to Dependent</label>
+                    <input type="select" class="form-control"  id = "faculty_DependentRelationship">
+                </div>
+            </div>
+
+
+      </form>
+
+      <br>
+      <br>
+      <h3 class = "faculty_Label">Employee Information</h3>
+        <form>
+            <!----ROW 1-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_UPEmail">UP E-mail</label>
+                    <input type="email" class="form-control"  id = "faculty_UPEmail">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Unit">Unit</label>
+                    <input type="text" class="form-control"  id = "faculty_Unit">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Status">Status</label>
+                    <input type="text" class="form-control"  id = "faculty_Status">
+                </div>
+
+                <div class="col">
+                    <label for="faculty_Category">Category</label>
+                    <input type="select" class="form-control"  id = "faculty_Category">
+                </div>
+
+            </div>
+            <!----ROW 2-->
+            <div class="form-row">
+                <div class="col">
+                    <label for="faculty_EmploymentPosition">Employment Position</label>
+                    <input type="text" class="form-control"  id = "faculty_EmploymentPosition">
+                </div>
+                <div class="col">
+                    <label for="faculty_StartDate">Start Date</label>
+                    <input type="text" class="form-control"  id = "faculty_StartDate">
+                </div>
+            </div>
+
+        </form>
+        <br>
+        <br>
+      <button type="button" class="btn btn-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+        Add Faculty
+      </button>
+
+    <br>
+    <br>
+</div>
