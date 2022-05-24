@@ -79,6 +79,13 @@ DEPARTMENTCHOICES=(
     ('3', 'Physics and Geology Unit (PGU)'),
 )
 
+ROLECHOICES=(
+    ('1', 'Faculty'),
+    ('2', 'Unit Head'),
+    ('3', 'Department Head'),
+    ('4', 'Admin Clerk')
+)
+
 #ADD DEPARTMENT UNIT
 #ADD MESSAGES per entity kasi need ng message hahahahah wawit for rejection hahaha
 #Check EXCEL HUHUHUH ANDAMI ILALAGAY and may ilalagay na mga bagong entity
@@ -120,6 +127,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     faculty_classification = models.CharField(max_length=20, choices=FACULTYCLASSIFICATIONCHOICES, default=FACULTYCLASSIFICATIONCHOICES[0])
     faculty_tenure = models.CharField(max_length=20, choices=FACULTYTENURECHOICES, default=FACULTYTENURECHOICES[0])
     faculty_status = models.CharField(max_length=20, choices=FACULTYSTATUSCHOICES, default=FACULTYSTATUSCHOICES[0])
+    role = models.CharField(max_length=20, choices=ROLECHOICES, default=ROLECHOICES[0])
 
     #boolean
     is_staff = models.BooleanField(default=False)
@@ -143,6 +151,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     permanent_address = models.CharField(max_length=254, null=True, blank=True)
     civil_status = models.CharField(max_length=10, choices=CIVILSTATUSCHOICES, default=CIVILSTATUSCHOICES[0])
     religion = models.CharField(max_length=254, null=True, blank=True)
+    profile_photo = models.ImageField(blank = True, upload_to = None)
 
     #Contact Details
     phone_number = models.CharField(max_length=20, null=True, blank=True)
@@ -168,33 +177,33 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return "%s" % self.email
     
-class FacultyProfile(models.Model):
-    user = models.OneToOneField(User, related_name= 'faculty_profiles', on_delete = models.CASCADE)
-    profile_picture = models.ImageField(blank = True, upload_to = None)
-    is_assigned = models.BooleanField(default=False)
-    is_approved = models.BooleanField(default=False)
+# class FacultyProfile(models.Model):
+#     user = models.OneToOneField(User, related_name= 'faculty_profiles', on_delete = models.CASCADE)
+#     profile_picture = models.ImageField(blank = True, upload_to = None)
+#     is_assigned = models.BooleanField(default=False)
+#     is_approved = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+#     def __str__(self):
+#         return f'{self.user.first_name} {self.user.last_name}'
 
-class UnitHeadProfile(models.Model):
-    user = models.OneToOneField(User, related_name= 'unithead_profiles', on_delete = models.CASCADE)
-    profile_picture = models.ImageField(blank = True, upload_to = None)
-    is_approved = models.BooleanField(default=False)
+# class UnitHeadProfile(models.Model):
+#     user = models.OneToOneField(User, related_name= 'unithead_profiles', on_delete = models.CASCADE)
+#     profile_picture = models.ImageField(blank = True, upload_to = None)
+#     is_approved = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+#     def __str__(self):
+#         return f'{self.user.first_name} {self.user.last_name}'
 
-class DepartmentHeadProfile(models.Model):
-    user = models.OneToOneField(User, related_name= 'departmenthead_profiles', on_delete = models.CASCADE)
-    profile_picture = models.ImageField(blank = True, upload_to = None)
+# class DepartmentHeadProfile(models.Model):
+#     user = models.OneToOneField(User, related_name= 'departmenthead_profiles', on_delete = models.CASCADE)
+#     profile_picture = models.ImageField(blank = True, upload_to = None)
 
-    def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+#     def __str__(self):
+#         return f'{self.user.first_name} {self.user.last_name}'
 
-class AdminProfile(models.Model):
-    user = models.OneToOneField(User, related_name= 'admin_profiles', on_delete = models.CASCADE)
-    profile_picture = models.ImageField(blank = True, upload_to = None)
+# class AdminProfile(models.Model):
+#     user = models.OneToOneField(User, related_name= 'admin_profiles', on_delete = models.CASCADE)
+#     profile_picture = models.ImageField(blank = True, upload_to = None)
 
-    def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+#     def __str__(self):
+#         return f'{self.user.first_name} {self.user.last_name}'

@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="static/css/styles.css">
+        <!--<link rel="icon" href="static/img/pghlogo.png" /> -->
+        <style>
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              width: 100%;
+              height:5%;
+              border: 1px solid #ddd;
+            }
+        </style>
+    </head>
+
+<body>
+    {% include '_navbar.html' %}
+    <section class="login-clean min-vh-100" > 
+        <div class="mx-auto" align="center">
+            <button class="tablink" onclick="openPage('EducAtt', this, 'red')" id="defaultOpen">Educational Attainment</button>
+            <button class="tablink" onclick="openPage('WorkExp', this, 'red')">Work Experience</button>
+            <button class="tablink" onclick="openPage('AccEvents', this, 'red')">Accomplishments Events</button>
+            <button class="tablink" onclick="openPage('Pub', this, 'red')">Publications</button>
+            <button class="tablink" onclick="openPage('ResGrants', this, 'red')">Research Grants</button>
+            <button class="tablink" onclick="openPage('LicExam', this, 'red')">Licensure Exam</button>
+            <button class="tablink" onclick="openPage('TrainSem', this, 'red')">Training Seminars</button>
+            <button class="tablink" onclick="openPage('ConfWork', this, 'red')">Conference Workshops</button>
+            <button class="tablink" onclick="openPage('ExtServ', this, 'red')">ExtensionServices</button>
+            <button class="tablink" onclick="openPage('FacServRec', this, 'red')">FacultyServiceRecord</button>
+        </div>       
+        <br>
+        <div id="EducAtt" class="tabcontent"> 
+        <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+            <tr>   
+                <td>
+                    <a href="{% url 'base:add_educ_att' %}" role="button">Add Educ Att</a>
+                    
+                </td>
+            </tr>
+            <tr>
+                    <!-- <th> Blood Code </th>   -->
+                    <th> Institution </th>                         
+                    <th> Degree </th>
+                    <th> Certification </th>
+                    <th> Major </th>
+                    <th> Specialization </th>
+                    <th> Degree type </th>
+                    <th> Proof </th>
+                    <th> Comments/Remarks </th>  
+            </tr>
+            
+            <tbody>                   
+                    {% for educ_att in EducAtt %}
+                    {% if user.is_authenticated %}   
+                    {% if educ_att.user.email == user.email %}  
+                        
+                        <tr>                  
+                            <!-- <td>{{ blood.blood_code }}</td>    -->
+                            <td>{{ educ_att.institution }}</td>                         
+                            <td>{{ educ_att.degree }}</td>
+                            <td>{{ educ_att.certification }}</td>                       
+                            <td>{{ educ_att.major }}</td>
+                            <td>{{ educ_att.specialization }}</td>
+                            <td>{{ educ_att.degree_type }}</td>
+                            <td>{{ educ_att.proof }}</td>
+                            <td>{{ educ_att.comments_remarks }}</td>
+                            <td>
+                                <a href="{% url 'base:edit_educ_att' pk=educ_att.pk %}" role="button"> Edit </a>                       
+                            </td>
+                            <td>
+                                <a href="{% url 'base:delete_educ_att' pk=educ_att.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                            </td>                           
+                                                                                      
+                        </tr>
+                        
+                    {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>  
+        </div>
+    
+        <div id="WorkExp" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_workexp' %}" role="button">Add Work Exp</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Position </th>                         
+                        <th> Employer Name </th>
+                        <th> Is Within</th>
+                        <th> Description </th>
+                        <th> Proof </th>
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for work_exp in WorkExp %}
+                        {% if user.is_authenticated %}   
+                        {% if work_exp.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ work_exp.position }}</td>                         
+                                <td>{{ work_exp.employer_name }}</td>
+                                <td>{{ work_exp.is_within }}</td>                       
+                                <td>{{ work_exp.description }}</td>
+                                <td>{{ work_exp.proof }}</td>
+                                <td>{{ work_exp.comments_remarks }}</td>
+                                <td>
+                                    <a href="{% url 'base:edit_workexp' pk=work_exp.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_workexp' pk=work_exp.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>  
+                                                                       
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+
+        <div id="AccEvents" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_acc_events' %}" role="button">Add Accomplishment Event</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Accomplishment Title </th>                         
+                        <th> Type </th>
+                        <th> Description </th>
+                        <th> Start Date </th>
+                        <th> End Date </th>
+                        <th> Proof </th>   
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for acc_event in AccEvent %}
+                        {% if user.is_authenticated %}   
+                        {% if acc_event.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ acc_event.accomplishment_title }}</td>                         
+                                <td>{{ acc_event.get_type_display }}</td>
+                                <td>{{ acc_event.description }}</td>                       
+                                <td>{{ acc_event.start_date }}</td>
+                                <td>{{ acc_event.end_date }}</td>
+                                <td>{{ acc_event.proof }}</td>
+                                <td>{{ acc_event.comments_remarks }}</td>
+                                <td>
+                                    <a href="{% url 'base:edit_acc_events' pk=acc_event.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_acc_events' pk=acc_event.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>  
+                               
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+
+        <div id="Pub" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_pub' %}" role="button">Add Publication</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Is DPSM </th>                         
+                        <th> Publication Name </th>
+                        <th> Citation</th>
+                        <th> URL </th>
+                        <th> Date Published </th>
+                        <th> Co-Author DPSM </th>  
+                        <th> Publication Type </th>
+                        <th> Conference Name </th>
+                        <th> Publisher Name </th>
+                        <th> Publisher Type </th>
+                        <th> Publisher Location </th>
+                        <th> Volume Issue Number </th>
+                        <th> Publication URL </th>
+                        <th> Publication DOI </th>
+                        <th> Publication ISBN </th>
+                        <th> Is ISI </th>
+                        <th> Is Elseviers Scropus </th>
+                        <th> Is CHED Recognized </th>
+                        <th> Other Collection </th>
+                        <th> Is Funded Up GAA </th>
+                        <th> UIOB </th>
+                        <th> Proof of Publication </th>
+                        <th> Proof of Utilization </th>
+                        <th> Is presented </th>
+                        <th> Is Approved </th>
+                        <th> Is Verified </th>
+                        <th> Comments Remarks </th>
+                                          
+                </tr>
+                
+                <tbody>                   
+                        {% for pubs in Pub %}
+                        {% if user.is_authenticated %}   
+                        {% if pubs.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ pubs.is_dpsm }}</td>                         
+                                <td>{{ pubs.publication_name }}</td>
+                                <td>{{ pubs.citation }}</td>                       
+                                <td>{{ pubs.url }}</td>
+                                <td>{{ pubs.date_published }}</td>
+                                <td>{{ pubs.co_author_DPSM }}</td>
+                                <td>{{ pubs.get_publication_type_display }}</td>
+                                <td>{{ pubs.conference_name }}</td>
+                                <td>{{ pubs.publisher_name }}</td>
+                                <td>{{ pubs.get_publisher_type_display }}</td>
+                                <td>{{ pubs.get_publisher_location_display }}</td>
+                                <td>{{ pubs.volume_issue_num }}</td>
+                                <td>{{ pubs.publication_url }}</td>
+                                <td>{{ pubs.publication_doi }}</td>
+                                <td>{{ pubs.publication_isbn }}</td>
+
+                                <td>{{ pubs.is_isi }}</td>
+                                <td>{{ pubs.is_elseviers_scopus }}</td>
+                                <td>{{ pubs.is_ched_recognized }}</td>
+                                <td>{{ pubs.other_collection }}</td>
+                                <td>{{ pubs.is_funded_up_gaa }}</td>
+                                <td>{{ pubs.uiob }}</td>
+
+                                <td>{{ pubs.proof_publication }}</td>
+                                <td>{{ pubs.proof_utilization }}</td>
+                                <td>{{ pubs.is_presented }}</td>
+
+                                <td>{{ pubs.is_approved }}</td>
+                                <td>{{ pubs.is_verified }}</td>
+                                <td>{{ pubs.comments_remarks }}</td>
+
+                                <td>
+                                    <a href="{% url 'base:edit_pub' pk=pubs.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_pub' pk=pubs.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>  
+                                
+                                
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+        <div id="ResGrants" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_res_grants' %}" role="button">Add Research Grant</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Co-Author DPSM </th>                         
+                        <th> Is DPSM </th>
+                        <th> Research Name</th>
+                        <th> Sponsor Name </th>
+                        <th> Grant Amount </th>
+                        <th> Project Start </th>
+                        <th> Project End </th>
+                        <th> Actual Start </th>
+                        <th> Actual End </th>
+                        <th> Research Progress </th>
+                        <th> Proof </th>
+                        <th> Is Approved </th>
+                        <th> Is Verified </th>
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for research_grants in ResGrant %}
+                        {% if user.is_authenticated %}   
+                        {% if research_grants.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ research_grants.co_author_DPSM.first_name }} {{ research_grants.co_author_DPSM.last_name }}</td>                         
+                                <td>{{ research_grants.is_dpsm }}</td>
+                                <td>{{ research_grants.research_name }}</td>                       
+                                <td>{{ research_grants.sponsor_name }}</td>
+                                <td>{{ research_grants.grant_amount }}</td>
+                                <td>{{ research_grants.co_author_DPSM }}</td>
+                                <td>{{ research_grants.project_start_date }}</td>
+                                <td>{{ research_grants.project_end_date }}</td>
+                                <td>{{ research_grants.actual_start_date }}</td>
+                                <td>{{ research_grants.actual_end_date }}</td>
+                                <td>{{ research_grants.research_progress }}</td>
+                                <td>{{ research_grants.proof }}</td>
+                                <td>{{ research_grants.is_approved }}</td>
+                                <td>{{ research_grants.is_verified }}</td>
+                                <td>{{ research_grants.comments_remarks }}</td>
+                              
+                                <td>
+                                    <a href="{% url 'base:edit_res_grants' pk=research_grants.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_res_grants' pk=research_grants.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>  
+                               
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+        <div id="LicExam" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_licexam' %}" role="button">Add Licensure Exam</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Exam </th>                         
+                        <th> Rank </th>
+                        <th> Licensure Number</th>
+                        <th> Date </th>
+
+                        <th> Proof </th>                        
+                        <th> Is Approved </th>
+                        <th> Is Verified </th>                          
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for lic_exams in LicExam %}
+                        {% if user.is_authenticated %}   
+                        {% if lic_exams.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ lic_exams.exam_name }} </td>                         
+                                <td>{{ lic_exams.rank }}</td>
+                                <td>{{ lic_exams.license_number }}</td>                       
+                                <td>{{ lic_exams.date_exam }}</td>
+                                <td>{{ lic_exams.proof }}</td>
+                                <td>{{ lic_exams.is_approved }}</td>
+                                <td>{{ lic_exams.is_verified }}</td>
+                                <td>{{ lic_exams.comments_remarks }}</td>                               
+                              
+                                <td>
+                                    <a href="{% url 'base:edit_licexam' pk=lic_exams.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_licexam' pk=lic_exams.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>
+                               
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+
+        <div id="TrainSem" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_trainsem' %}" role="button">Add Training Seminar</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Training </th>                         
+                        <th> Role </th>
+                        <th> Remarks </th>
+                        <th> Start </th>
+                        <th> End </th>   
+                        <th> Proof </th>                                          
+                        <th> Is Approved </th>
+                        <th> Is Verified </th>          
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for train_sem in TrainSem %}
+                        {% if user.is_authenticated %}   
+                        {% if train_sem.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ train_sem.training_name }} </td>                         
+                                <td>{{ train_sem.role }}</td>
+                                <td>{{ train_sem.remarks }}</td>                       
+                                <td>{{ train_sem.start_date }}</td>
+                                <td>{{ train_sem.end_date }}</td>
+
+                                <td>{{ train_sem.proof }}</td>
+                                <td>{{ train_sem.is_approved }}</td>
+                                <td>{{ train_sem.is_verified }}</td>
+                                <td>{{ train_sem.comments_remarks }}</td>                               
+                                <td>
+                                    <a href="{% url 'base:edit_trainsem' pk=train_sem.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_trainsem' pk=train_sem.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td>                                
+                               
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+
+        <div id="ConfWork" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_confwork' %}" role="button">Add Conference Work</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Event </th>                         
+                        <th> Paper </th>
+                        <th> Presentation Type</th>
+                        <th> Conference </th>
+                        <th> Organizer </th>
+                        <th> Location </th>
+                        <th> Venue </th>
+                        <th> Start </th>
+                        <th> End </th>
+                        <th> Presentation Date </th>
+                        <th> Fund Source </th>
+                        <th> URIOB </th>
+
+
+                        <th> Is Approved </th>
+                        <th> Is Verified </th> 
+                        <th> Comments/Remarks </th>                    
+                </tr>
+                
+                <tbody>                   
+                        {% for conf_work in ConfWork %}
+                        {% if user.is_authenticated %}   
+                        {% if conf_work.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ conf_work.event_name }} </td>                         
+                                <td>{{ conf_work.paper_title }}</td>
+                                <td>{{ conf_work.get_presentation_type_display }}</td>                       
+                                <td>{{ conf_work.conference_title }}</td>
+                                <td>{{ conf_work.organizer_name }}</td>
+                                <td>{{ conf_work.get_conference_location_display }}</td>
+                                <td>{{ conf_work.conference_venue }}</td>
+                                <td>{{ conf_work.conference_title }}</td>
+                                <td>{{ conf_work.start_date }}</td>
+                                <td>{{ conf_work.end_date }}</td>
+                                <td>{{ conf_work.presentation_date }}</td>
+                                <td>{{ conf_work.fund_source }}</td>
+                                <td>{{ conf_work.uriob }}</td>
+
+                                <td>{{ conf_work.proof }}</td>
+                                <td>{{ conf_work.is_approved }}</td>
+                                <td>{{ conf_work.is_verified }}</td>
+                                <td>{{ conf_work.comments_remarks }}</td>                               
+                                <td>
+                                    <a href="{% url 'base:edit_confwork' pk=conf_work.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_confwork' pk=conf_work.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td> 
+                                
+                                
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+
+        <div id="ExtServ" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_extserv' %}" role="button">Add Extension Service</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Training </th>                         
+                        <th> Venue </th>
+                        <th> Date </th>
+                        <th> Number of Participants </th>
+                        <th> Target Beneficiary </th>
+                        <th> Fund Source </th>  
+                        
+                        <th> Proof </th>
+                        <th> Is Approved </th>
+                        <th> Is Verified </th> 
+                        <th> Comments/Remarks </th>   
+                </tr>
+                
+                <tbody>                   
+                        {% for ext_serv in ExtServ %}
+                        {% if user.is_authenticated %}   
+                        {% if ext_serv.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ ext_serv.training_title }} </td>                         
+                                <td>{{ ext_serv.venue }}</td>
+                                <td>{{ ext_serv.date }}</td>                       
+                                <td>{{ ext_serv.number_participants }}</td>
+                                <td>{{ ext_serv.target_beneficiary }}</td>
+                                <td>{{ ext_serv.fund_source }}</td>
+                                
+                                <td>{{ ext_serv.proof }}</td>
+                                <td>{{ ext_serv.is_approved }}</td>
+                                <td>{{ ext_serv.is_verified }}</td>
+                                <td>{{ ext_serv.comments_remarks }}</td>                               
+                              
+                                <td>
+                                    <a href="{% url 'base:edit_extserv' pk=ext_serv.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_extserv' pk=ext_serv.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td> 
+                                
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
+    </section>           
+        
+    
+    
+<script>   
+    function openPage(pageName,elmnt,color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+<script src="static/js/jquery.min.js"></script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+</body>
