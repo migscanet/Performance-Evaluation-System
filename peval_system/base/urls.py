@@ -14,7 +14,8 @@ app_name = 'base'
 urlpatterns =[
     path("profile", views.view_profile, name='view_profile'),
     path("admin_dash", views.admin_dash, name='admin_dash'),
-    
+    path("add_user", views.add_user, name='add_user'),
+
     path("add_educ_att", views.add_educ_att, name='add_educ_att'),
     path("add_workexp", views.add_workexp, name='add_workexp'),
     path("add_pub", views.add_pub, name='add_pub'),

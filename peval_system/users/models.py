@@ -86,12 +86,6 @@ ROLECHOICES=(
     ('4', 'Admin Clerk')
 )
 
-#ADD DEPARTMENT UNIT
-#ADD MESSAGES per entity kasi need ng message hahahahah wawit for rejection hahaha
-#Check EXCEL HUHUHUH ANDAMI ILALAGAY and may ilalagay na mga bagong entity
-#Dapat meron din nag ttrack ng mga student achievements HUHUHUHU WAWITER
-# maglagay ng isApproved for DPSM head, kulang kasi kung sa unit head lang
-#add boolean for faculty if what dpsm unit siya ehehehe
 class UserManager(BaseUserManager):
     def create_user(self, email, alternative_email, password=None):
         if not email:
@@ -104,15 +98,10 @@ class UserManager(BaseUserManager):
             is_active=True,            
             last_login=now,
             date_joined=now, 
-            # **extra_fields
         )
-        # user.is_staff = True
         user.set_password(password)
         user.save(using=self._db)
         return user
-
-    # def create_user(self, email, password, **extra_fields):
-    #     return self._create_user(email, password, False, False, **extra_fields)
 
     def create_superuser(self, email, alternative_email, password):
         user=self.create_user(email = email, alternative_email = alternative_email, password = password)
@@ -124,8 +113,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=254, unique=True)
     alternative_email = models.EmailField(max_length=254, unique=True)
 
-    
-    #user_id = models.UUIDField(primary_key=True, unique=True)
     #Classification
     department = models.CharField(max_length=240, choices=DEPARTMENTCHOICES, default=DEPARTMENTCHOICES[0])
     faculty_rank = models.CharField(max_length=20, choices=FACULTYRANKCHOICES, default=FACULTYRANKCHOICES[0])
@@ -170,7 +157,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     emergency_contact_relationship = models.CharField(max_length=20, null=True, blank=True)
 
     USERNAME_FIELD = 'email'
-    # EMAIL_FIELD = 'email'
+
     REQUIRED_FIELDS = [
         'alternative_email'
     ]
@@ -182,34 +169,3 @@ class User(AbstractBaseUser, PermissionsMixin):
     
     def __str__(self):
         return "%s" % self.email
-    
-# class FacultyProfile(models.Model):
-#     user = models.OneToOneField(User, related_name= 'faculty_profiles', on_delete = models.CASCADE)
-#     profile_picture = models.ImageField(blank = True, upload_to = None)
-#     is_assigned = models.BooleanField(default=False)
-#     is_approved = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f'{self.user.first_name} {self.user.last_name}'
-
-# class UnitHeadProfile(models.Model):
-#     user = models.OneToOneField(User, related_name= 'unithead_profiles', on_delete = models.CASCADE)
-#     profile_picture = models.ImageField(blank = True, upload_to = None)
-#     is_approved = models.BooleanField(default=False)
-
-#     def __str__(self):
-#         return f'{self.user.first_name} {self.user.last_name}'
-
-# class DepartmentHeadProfile(models.Model):
-#     user = models.OneToOneField(User, related_name= 'departmenthead_profiles', on_delete = models.CASCADE)
-#     profile_picture = models.ImageField(blank = True, upload_to = None)
-
-#     def __str__(self):
-#         return f'{self.user.first_name} {self.user.last_name}'
-
-# class AdminProfile(models.Model):
-#     user = models.OneToOneField(User, related_name= 'admin_profiles', on_delete = models.CASCADE)
-#     profile_picture = models.ImageField(blank = True, upload_to = None)
-
-#     def __str__(self):
-#         return f'{self.user.first_name} {self.user.last_name}'
