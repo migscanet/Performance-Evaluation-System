@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dashboard</title>
+	<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="style_unit_head.css">
+        <img id = "logo" src = "https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/University_of_the_Philippines_Manila_Seal.svg/1200px-University_of_the_Philippines_Manila_Seal.svg.png"> 
+        <style>
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              width: 100%;
+              height:5%;
+              border: 1px solid #ddd;
+            }
+        </style>
+</head>
+<body>
+	 {% include '_navbar.html' %}
+    <section class="login-clean min-vh-100" > 
+        <div class="sidebar">
+            <a href="unit_head_dash.html"style="background-color:#87906F"><font style="color:black">Dashboard</font></a>
+            <a href="unit_head_faculty.html">Faculty List</a>
+            <a href="unit_head_approval.html">Pending Approvals</a>
+            <a href="unit_head_role.html">Role Assignment</a>
+        </div>       
+        <br>
+    </section> 
+
+     <h2>Accomplishment Count</h2>  
+        <div class="content">
+            <table id="filter_table">
+                <tr>
+                    <th>Department Unit</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>   </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="dept_unit" id="dept_unit">
+                            <option value="1" disabled>Chemistry Unit</option>
+                            <option value="2" disabled>Mathematical and Computational Sciences Unit</option>
+                            <option value="3" disabled>Physics and Geology Unit</option>
+                        </select>
+                    </td>
+                    <td><input type="date" name="start_date" style="width:225px"></td>
+                    <td><input type="date" name="end_date" style="width:225px"></td>
+                    <td><button id="filter_button" style="background-color:#0D6EFD"><font style="color:white">Filter</font></button></td>
+                </tr>
+            </table>
+
+            Current view:
+            <button id="graph_view" onclick="window.location.href='unit_head_dash.html';">Overview</button>
+            <button id="list_view" style="background-color:#006100" onclick="window.location.href='unit_head_table.html';"><font style="color:white">Full List</font></button>   
+            
+            &nbsp; &nbsp; 
+            
+            Sort by: 
+            <select name="dept_unit" id="dept_unit">
+                <option value="1">Name of Faculty</option>
+                <option value="2">Accomplishment</option>
+                <option value="3">Accomplishment Type</option>
+                <option value="4">Start Date (Latest)</option>
+                <option value="5">End Date (Latest)</option>
+            </select>
+
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; 
+
+            <button id="export_button"style="background-color:#0D6EFD;align: right;width: 165px;"><font style="color:white">Export as Excel file</font></button>
+
+            <br><br>
+            <input type="text" name="search_bar" value="Search" style="width:285px">
+
+            <br><br>
+            <table id="accomplishment_table">
+                <tr>
+                    <th style="width:275px">Name of Faculty</th>
+                    <th style="width:200px">Accomplishment</th>
+                    <th>Accomplishment Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+                
+            </table>
+        </div>
+
+
+</body>
+</html
+
+

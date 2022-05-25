@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Faculty List</title>
+		<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="style_unit_head.css">
+        <img id = "logo" src = "https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/University_of_the_Philippines_Manila_Seal.svg/1200px-University_of_the_Philippines_Manila_Seal.svg.png"> 
+        <style>
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              width: 100%;
+              height:5%;
+              border: 1px solid #ddd;
+            }
+        </style>
+
+</head>
+<body>
+	{% include '_navbar.html' %}
+    <section class="login-clean min-vh-100" > 
+        <div class="sidebar">
+            <a href="unit_head_dash.html">Dashboard</a>
+            <a href="unit_head_faculty.html"style="background-color:#87906F"><font style="color:black">Faculty List</font></a>
+            <a href="unit_head_approval.html">Pending Approvals</a>
+            <a href="unit_head_role.html">Role Assignment</a>
+        </div>       
+        <br>
+    </section> 
+
+     <h2>Faculty List</h2>
+     <div class="content">
+     	<table id="faculty_table">
+     		<tr>
+     			<th style="width:275px;border-collapse: collapse; border-color:black">Name</th>
+     			<th style="border-collapse: collapse; border-color:black">Department Unit</th>
+     			<th>Position</th>
+     			<th>Status</th>
+     			<th>Category</th>
+     		</tr>
+     	</table>
+     	
+     </div>  
+
+</body>
+</html>

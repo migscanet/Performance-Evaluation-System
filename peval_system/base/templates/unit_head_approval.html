@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Pending Approvals</title>
+	<link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="style_unit_head.css">
+        <img id = "logo" src = "https://upload.wikimedia.org/wikipedia/en/thumb/3/3d/University_of_the_Philippines_Manila_Seal.svg/1200px-University_of_the_Philippines_Manila_Seal.svg.png"> 
+        <style>
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              width: 100%;
+              height:5%;
+              border: 1px solid #ddd;
+            }
+        </style>
+</head>
+<body>
+	<section class="login-clean min-vh-100" > 
+        <div class="sidebar">
+            <a href="unit_head_dash.html">Dashboard</a>
+            <a href="unit_head_faculty.html">Faculty List</a>
+            <a href="unit_head_approval.html"style="background-color:#87906F"><font style="color:black">Pending Approvals</font></a>
+            <a href="unit_head_role.html">Role Assignment</a>
+        </div>       
+        <br>
+    </section>    
+    <h2>Pending Approvals</h2>  
+    <div class="content">
+        <h4>Faculty Information</h4>
+        <table id="info_approval_table">
+                <tr>
+                    <th style="width:250px">Name of Faculty</th>
+                    <th style="width:300px">Verified Information for Approval</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td style="width:250px"></td>
+                    <td style="width:300px"></td>
+                    <td>
+                        <select name="info_approval_status" id="approval_status">
+                            <option value="1">Pending</option>
+                            <option value="2">Approved</option>
+                            <option value="3">Rejected</option>
+                        </select>
+                    </td>
+                </tr>
+        </table>
+        <br><br>
+        <h4>Status of Role Assignment for Unit Head</h4>
+        <table id="role_approval_table">
+                <tr>
+                    <th style="width:250px">Name of Faculty</th>
+                    <th style="width:200px">Department Unit</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <td style="width:250px"></td>
+                    <td style="width:200px"></td>
+                    <td>
+                        <select name="role_approval_status" id="approval_status">
+                            <option value="1" disabled>Pending</option>
+                            <option value="2" disabled>Approved</option>
+                            <option value="3" disabled>Rejected</option>
+                        </select>
+                    </td>
+                </tr>
+                
+            </table>
+        
+    </div>     
+
+</body>
+</html>
