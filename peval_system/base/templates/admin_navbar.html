@@ -1,0 +1,18 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" id="logout" href="{% url 'users:logout_user' %}">Logout</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'base:admin_dash' %}">Dashboard</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'base:add_user' %}">Create User</a>
+        </li>
+        </li>
+      </ul>
+    </div>
+  </nav>

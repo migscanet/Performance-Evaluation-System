@@ -13,6 +13,47 @@
 <body>
 	{% include '_navbar.html' %}
 	<br>
+    <br>
+    <br>
+	<main>
+        <section>
+            <div class="container">
+                <div>
+                    <h1 style="text-align: center;font-size: 35px;margin-top: 20px; font-weight: bold;">EDIT CREDENTIALS</h1>
+                </div>
+            </div>
+        </section>
+    </main>
+    <div style="margin-top: 29px;">
+        <div class="container">
+            <form method="POST" class="form-group" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6">
+                        {% include '_baseform.html' with form=tempForm %}
+                    </div>
+                </div>  
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <!-- <button class="btn btn-primary" type="button">Print</button> -->
+                    </div>
+                </div>
+                </div>
+            </form> 
+        </div>         
+    </div>
+</body>
+<script type="text/javascript">
+    function clicked() {
+        if (confirm('Are you sure all the information above are correct?')) {
+            yourformelement.submit();
+        } else {
+            return false;
+        }
+    }        
+</script>    
+	<!-- <br>
 	<h1 align="center">Edit Entry</h1>
 	
 	
@@ -27,10 +68,10 @@
 			</div>
 		</form>
 		
-		
-	<script src="{% static '/js/jquery.min.js' %}"></script>
-    <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
-		
+		 -->
+<script src="{% static '/js/jquery.min.js' %}"></script>
+<script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+			 
 
 	
 </body>

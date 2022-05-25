@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
 from django.template import loader
 from django.contrib import auth, messages
+from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import *
 from .forms import *
 
@@ -35,7 +36,64 @@ def view_profile(request):
     }
 
     return render(request, 'profile.html', context)
+
+def admin_dash(request):
+    educ_att = EducationalAttainment.objects.all()
+    work_exp = WorkExperience.objects.all()
+    acc_event = AccomplishmentsEvents.objects.all()
+    pubs = Publications.objects.all()
+    research_grants = ResearchGrants.objects.all()
+    lic_exams = LicensureExam.objects.all()
+    train_sem = TrainingSeminars.objects.all()
+    conf_work = ConferenceWorkshops.objects.all()
+    ext_serv = ExtensionServices.objects.all()
+    faculty_serv_rec = FacultyServiceRecord.objects.all()
+    create_user_form = CreateUserForm()
+    educ_form = EducAttForm()
+    work_exp_form = WorkExpForm()
+    acc_events_form = AccEventsForm()
+    pub_form = PubForm()
+    research_grants_form = ResearchGrantsForm()
+    lic_exam_form = LicExamForm()
+    train_sem_form = TrainSemForm()
+    conf_work_form = ConfWorkForm()
+    ext_serv_form = ExtServForm()
+    faculty_serv_rec_form = FacultyServRecForm()
+
+
+    context = {
+        'EducAtt' : educ_att,
+        'WorkExp' : work_exp,   
+        'AccEvent' : acc_event,
+        'Pub' : pubs,   
+        'ResGrant' : research_grants,
+        'LicExam' : lic_exams,   
+        'TrainSem' : train_sem,
+        'ConfWork' : conf_work,    
+        'ExtServ' : ext_serv,    
+        'FacServRec' : faculty_serv_rec,
+        'create_user_form': create_user_form,
+        'educ_form': educ_form,
+        'work_exp_form': work_exp_form,
+        'acc_events_form': acc_events_form,
+        'pub_form': pub_form,
+        'research_grants_form': research_grants_form,
+        'lic_exam_form': lic_exam_form,
+        'train_sem_form': train_sem_form,
+        'conf_work_form': conf_work_form,
+        'ext_serv_form': ext_serv_form,
+        'faculty_serv_rec_form': faculty_serv_rec_form
+    }
+    return render(request, 'admin_dash.html', context)
+
+def add_user(request):
+    if request.method == "POST":
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            form.save()
     
+    form = CreateUserForm()
+    return render(request, 'add_user.html', {'form': form})
 
 def add_educ_att(request):
     user = User.objects.get(id=request.user.id)
@@ -164,7 +222,6 @@ def add_pub(request):
         print('not user')
         form = PubForm()
         return render(request, 'add_cred.html', {'form': form})
-
 
 def add_res_grants(request):
     user = User.objects.get(id=request.user.id)
@@ -325,6 +382,28 @@ def add_extserv(request):
         print('not user')
         form = ExtServForm()
         return render(request, 'add_cred.html', {'form': form})  
+
+def edit_user(request, pk):
+    entry = get_object_or_404(User, pk=pk)
+
+    if request.method == "POST":
+        tempForm = CreateUserForm(request.POST, request.FILES, instance = entry)
+        if tempForm.is_valid():
+            print('valid')
+            instance = tempForm.save(commit=False)           
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/profile")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = EducAttForm(instance=entry)
+        context = {
+                'tempForm':tempForm,		
+                }
+                # INCLUDE EDIT USER HTML
+        return render(request, 'update_user.html', context)
   
 def edit_educ_att(request, pk):
     entry = get_object_or_404(EducationalAttainment, pk=pk)
@@ -561,5 +640,3 @@ def delete_confwork(request, pk):
 def delete_extserv(request, pk):
     ExtensionServices.objects.filter(pk=pk).delete()
     return redirect('/profile')
-
-
