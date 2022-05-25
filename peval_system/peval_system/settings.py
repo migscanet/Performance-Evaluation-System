@@ -31,7 +31,9 @@ if DEBUG:
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "users.User"
-AUTHENTICATION_BACKENDS = ('users.backends.CaseInsensitiveModelBackend') 
+AUTHENTICATION_BACKENDS = (
+    'users.backends.CaseInsensitiveModelBackend',
+    'django.contrib.auth.backends.AllowAllUsersBackend') 
 
 # Application definition
 
