@@ -1,8 +1,22 @@
 <html>
     {%load crispy_forms_tags%}
     <body>
-        <h1>This is unit head</h1>
+        <li><a class="nav-link active" id="logout" href="{% url 'users:logout_user' %}">Logout</a></li>
+        <section class="login-clean min-vh-100" > 
+            <!-- <div class="mx-auto" align="center">
+                <button class="tablink" onclick="openPage('EducAtt', this, 'red')" id="defaultOpen">Educational Attainment</button>
+                <button class="tablink" onclick="openPage('WorkExp', this, 'red')">Work Experience</button>
+                <button class="tablink" onclick="openPage('AccEvents', this, 'red')">Accomplishments Events</button>
+                <button class="tablink" onclick="openPage('Pub', this, 'red')">Publications</button>
+                <button class="tablink" onclick="openPage('ResGrants', this, 'red')">Research Grants</button>
+                <button class="tablink" onclick="openPage('LicExam', this, 'red')">Licensure Exam</button>
+                <button class="tablink" onclick="openPage('TrainSem', this, 'red')">Training Seminars</button>
+                <button class="tablink" onclick="openPage('ConfWork', this, 'red')">Conference Workshops</button>
+                <button class="tablink" onclick="openPage('ExtServ', this, 'red')">ExtensionServices</button>
+                <button class="tablink" onclick="openPage('FacServRec', this, 'red')">FacultyServiceRecord</button>
+            </div>        -->
 
         {{create_user_form|crispy}}
+        
     </body>
 </html>

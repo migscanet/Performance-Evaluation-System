@@ -85,63 +85,63 @@ def admin_dash(request):
     }
     return render(request, 'admin_dash.html', context)
 
-def dept_head_dash(request):
-    educ_att = EducationalAttainment.objects.all()
-    work_exp = WorkExperience.objects.all()
-    acc_event = AccomplishmentsEvents.objects.all()
-    pubs = Publications.objects.all()
-    research_grants = ResearchGrants.objects.all()
-    lic_exams = LicensureExam.objects.all()
-    train_sem = TrainingSeminars.objects.all()
-    conf_work = ConferenceWorkshops.objects.all()
-    ext_serv = ExtensionServices.objects.all()
-    faculty_serv_rec = FacultyServiceRecord.objects.all()
+# def dept_head_dash(request):
+#     educ_att = EducationalAttainment.objects.all()
+#     work_exp = WorkExperience.objects.all()
+#     acc_event = AccomplishmentsEvents.objects.all()
+#     pubs = Publications.objects.all()
+#     research_grants = ResearchGrants.objects.all()
+#     lic_exams = LicensureExam.objects.all()
+#     train_sem = TrainingSeminars.objects.all()
+#     conf_work = ConferenceWorkshops.objects.all()
+#     ext_serv = ExtensionServices.objects.all()
+#     faculty_serv_rec = FacultyServiceRecord.objects.all()
 
-    #myFilter = RequestFilter(request.GET, queryset=requests)
-    #request = myFilter.qs
+#     #myFilter = RequestFilter(request.GET, queryset=requests)
+#     #request = myFilter.qs
 
-    context = {
-        'EducAtt' : educ_att,
-        'WorkExp' : work_exp,   
-        'AccEvent' : acc_event,
-        'Pub' : pubs,   
-        'ResGrant' : research_grants,
-        'LicExam' : lic_exams,   
-        'TrainSem' : train_sem,
-        'ConfWork' : conf_work,    
-        'ExtServ' : ext_serv,    
-        'FacServRec' : faculty_serv_rec,    
-    }
-    return render(request, 'dept_head_dash.html', context)
+#     context = {
+#         'EducAtt' : educ_att,
+#         'WorkExp' : work_exp,   
+#         'AccEvent' : acc_event,
+#         'Pub' : pubs,   
+#         'ResGrant' : research_grants,
+#         'LicExam' : lic_exams,   
+#         'TrainSem' : train_sem,
+#         'ConfWork' : conf_work,    
+#         'ExtServ' : ext_serv,    
+#         'FacServRec' : faculty_serv_rec,    
+#     }
+#     return render(request, 'dept_head_dash.html', context)
 
-def unit_head_dash(request):
-    educ_att = EducationalAttainment.objects.all()
-    work_exp = WorkExperience.objects.all()
-    acc_event = AccomplishmentsEvents.objects.all()
-    pubs = Publications.objects.all()
-    research_grants = ResearchGrants.objects.all()
-    lic_exams = LicensureExam.objects.all()
-    train_sem = TrainingSeminars.objects.all()
-    conf_work = ConferenceWorkshops.objects.all()
-    ext_serv = ExtensionServices.objects.all()
-    faculty_serv_rec = FacultyServiceRecord.objects.all()
+# def unit_head_dash(request):
+#     educ_att = EducationalAttainment.objects.all()
+#     work_exp = WorkExperience.objects.all()
+#     acc_event = AccomplishmentsEvents.objects.all()
+#     pubs = Publications.objects.all()
+#     research_grants = ResearchGrants.objects.all()
+#     lic_exams = LicensureExam.objects.all()
+#     train_sem = TrainingSeminars.objects.all()
+#     conf_work = ConferenceWorkshops.objects.all()
+#     ext_serv = ExtensionServices.objects.all()
+#     faculty_serv_rec = FacultyServiceRecord.objects.all()
 
-    #myFilter = RequestFilter(request.GET, queryset=requests)
-    #request = myFilter.qs
+#     #myFilter = RequestFilter(request.GET, queryset=requests)
+#     #request = myFilter.qs
 
-    context = {
-        'EducAtt' : educ_att,
-        'WorkExp' : work_exp,   
-        'AccEvent' : acc_event,
-        'Pub' : pubs,   
-        'ResGrant' : research_grants,
-        'LicExam' : lic_exams,   
-        'TrainSem' : train_sem,
-        'ConfWork' : conf_work,    
-        'ExtServ' : ext_serv,    
-        'FacServRec' : faculty_serv_rec,    
-    }
-    return render(request, 'unit_head_dash.html')
+#     context = {
+#         'EducAtt' : educ_att,
+#         'WorkExp' : work_exp,   
+#         'AccEvent' : acc_event,
+#         'Pub' : pubs,   
+#         'ResGrant' : research_grants,
+#         'LicExam' : lic_exams,   
+#         'TrainSem' : train_sem,
+#         'ConfWork' : conf_work,    
+#         'ExtServ' : ext_serv,    
+#         'FacServRec' : faculty_serv_rec,    
+#     }
+#     return render(request, 'unit_head_dash.html')
     
 
 def add_educ_att(request):
@@ -432,6 +432,29 @@ def add_extserv(request):
         print('not user')
         form = ExtServForm()
         return render(request, 'add_cred.html', {'form': form})  
+
+def edit_user(request, pk):
+    entry = get_object_or_404(User, pk=pk)
+
+    if request.method == "POST":
+        tempForm = CreateUserForm(request.POST, request.FILES, instance = entry)
+        if tempForm.is_valid():
+            print('valid')
+            instance = tempForm.save(commit=False)           
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/profile")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = EducAttForm(instance=entry)
+        context = {
+                'tempForm':tempForm,		
+                }
+                # INCLUDE EDIT USER HTML
+        return render(request, 'edit_cred.html', context)
+
   
 def edit_educ_att(request, pk):
     entry = get_object_or_404(EducationalAttainment, pk=pk)
