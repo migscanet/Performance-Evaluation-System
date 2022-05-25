@@ -93,20 +93,20 @@ ROLECHOICES=(
 # maglagay ng isApproved for DPSM head, kulang kasi kung sa unit head lang
 #add boolean for faculty if what dpsm unit siya ehehehe
 class UserManager(BaseUserManager):
-    def create_user(self, email, is_staff, password=None):
+    def create_user(self, email, alternative_email, password=None):
         if not email:
             raise ValueError('Users must have an email address')
         now = timezone.now()
         email = self.normalize_email(email)
         user = self.model(
-            email=email,      
-            is_staff=is_staff,
-            # is_superuser=is_superuser,      
+            email=email,
+            alternative_email = alternative_email,           
             is_active=True,            
             last_login=now,
             date_joined=now, 
             # **extra_fields
         )
+        # user.is_staff = True
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -114,8 +114,8 @@ class UserManager(BaseUserManager):
     # def create_user(self, email, password, **extra_fields):
     #     return self._create_user(email, password, False, False, **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
-        user=self.create_user(email, password, True, **extra_fields)
+    def create_superuser(self, email, alternative_email, password):
+        user=self.create_user(email = email, alternative_email = alternative_email, password = password)
         user.is_superuser = True
         user.save(using=self._db)
         return user
@@ -171,7 +171,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     # EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = [
+        'alternative_email'
+    ]
 
     objects = UserManager()
 

@@ -2,6 +2,8 @@
     {%load crispy_forms_tags%}
     <body>
         <li><a class="nav-link active" id="logout" href="{% url 'users:logout_user' %}">Logout</a></li>
+        <!-- For updating user tenure status and other stuff -->
+        <!-- <a href="{% url 'base:edit_educ_att' pk=educ_att.pk %}" role="button"> Edit </a> -->
         <section class="login-clean min-vh-100" > 
             <!-- <div class="mx-auto" align="center">
                 <button class="tablink" onclick="openPage('EducAtt', this, 'red')" id="defaultOpen">Educational Attainment</button>

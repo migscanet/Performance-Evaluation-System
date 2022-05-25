@@ -453,7 +453,7 @@ def edit_user(request, pk):
                 'tempForm':tempForm,		
                 }
                 # INCLUDE EDIT USER HTML
-        return render(request, 'edit_cred.html', context)
+        return render(request, 'update_user.html', context)
 
   
 def edit_educ_att(request, pk):
