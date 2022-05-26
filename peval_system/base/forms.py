@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.utils.translation import gettext_lazy as _
 from datetime import date
 from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout, Submit, Row, Column
 
 
 # class CreateUserForm(forms.ModelForm):
@@ -145,3 +146,55 @@ class FacultyServRecForm(forms.ModelForm):
         exclude = ['user', 'is_approved', 'is_verified', 'comments_remarks']
 
 
+#----------FORMS FOR CREATE FACULTY---------------------
+class CreateFacultyForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+    class Meta:
+
+        model = User
+
+        exclude = ['is_active', 'last_login', 'date_joined', 'is_Faculty']
+        labels = {
+            'email': 'Email:',
+            # 'alternative_email': 'Alternative Email:',
+            'first_name': 'First Name:', 
+            'last_name': 'Last Name:', 
+            'middle_name': 'Middle Name:',
+            'suffix': 'Suffix:',
+            'sex': 'Sex:',
+
+            'birth_date': 'Birth Date:',
+            'birth_place': 'Birth Place:',
+            'present_address': 'Present Address:',
+            'permanent_address': 'Permanent Address:',
+
+            'civil_status': 'Civil Status:',
+            'religion': 'Religion:',
+            'profile_photo': 'Profile Photo:',
+
+            'phone_number': 'Phone Number:',
+            'landline_number': 'Landline Number:',
+            'emergency_contact_name': 'Emergency Contact Name:',
+
+            'emergency_contact_number': 'Emergency Contact Number:',
+            'emergency_contact_birthdate': 'Emergency Contact Birthdate:',
+            'emergency_contact_relationship': 'Emergency Contact Relationship:',
+            'department': 'Department:',
+            'faculty_rank': 'Faculty Rank:',
+            'faculty_classification': 'Faculty Classification:',
+            'faculty_tenure': 'Faculty Tenure:',
+            'faculty_status': 'Faculty Status:',
+            'role': 'Role:',
+        }
+
+        widgets = {
+            'email': forms.TextInput(attrs={'placeholder': 'example@mail.com', 'autofocus': True}),
+            'phone_number': forms.TextInput(attrs={'placeholder': '09123456789','type':'number'}),
+            'landline_number': forms.TextInput(attrs={'placeholder': '09123456789','type':'number'}),
+            'emergency_contact_number': forms.TextInput(attrs={'placeholder': '09123456789','type':'number'}),
+            # 'birth_date': DateInput(),
+            # 'emergency_contact_birthdate': DateInput(),
+            }

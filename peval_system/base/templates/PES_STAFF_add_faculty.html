@@ -1,0 +1,161 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% include '_navbar.html' %}
+
+<!DOCTYPE html>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'admin_style.css' %}">
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<div id="mySidebar" class="sidebar">
+
+    <div class = "sidebar_inner">
+        <a class = "sidebarButton">Faculty</a>
+        <a class = "sidebarButton">Student</a>
+        <a class = "sidebarButton">Alumni</a>
+        <a class = "sidebarButton">Department</a>
+        <a class = "PES_exitpage">Exit</a>
+    </div>        
+</div>
+
+
+
+<div id = "PES_add_faculty_fields" class = "form-group">
+    <br>
+    <h3 class = "faculty_Label">PERSONAL INFORMATION</h3>
+    <br>
+    <br>
+    
+        <form method = "POST">
+            {% csrf_token %}
+            <!----ROW 1-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.email|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.first_name|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.last_name|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.middle_name|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.suffix|as_crispy_field }}
+                </div>
+            </div>
+
+            <!----ROW 2-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.sex|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.birth_date|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.birth_place|as_crispy_field }}
+                </div>
+            </div>
+            <!----ROW 3-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.present_address|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.permanent_address|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.civil_status|as_crispy_field }}
+                </div>
+            </div>
+            <!----ROW 4-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.religion|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.profile_photo|as_crispy_field }}
+                </div>
+            </div>
+
+            <!----ROW 5-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.phone_number|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.landline_number|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.emergency_contact_name|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.emergency_contact_number|as_crispy_field }}
+                </div>
+            </div>
+
+            <!----ROW 6-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.emergency_contact_birthdate|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.emergency_contact_relationship|as_crispy_field }}
+                </div>
+            </div>
+
+
+      </form>
+
+      <br>
+      <br>
+      <h3 class = "faculty_Label">Employee Information</h3>
+        <form>
+            <!----ROW 1-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.department|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.faculty_rank|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.faculty_classification|as_crispy_field }}
+                </div>
+
+                <div class="col">
+                    {{ form.faculty_tenure|as_crispy_field }}
+                </div>
+
+            </div>
+            <!----ROW 2-->
+            <div class="form-row">
+                <div class="col">
+                    {{ form.faculty_status|as_crispy_field }}
+                </div>
+                <div class="col">
+                    {{ form.role|as_crispy_field }}
+                </div>
+            </div>
+
+        </form>
+        <br>
+        <br>
+      <button type="button" class="btn btn-success" data-toggle="button" aria-pressed="false" autocomplete="off">
+        Add Faculty
+      </button>
+
+    <br>
+    <br>
+</div>

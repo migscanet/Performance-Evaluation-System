@@ -47,6 +47,9 @@ urlpatterns =[
     path("delete_trainsem/<int:pk>/", views.delete_trainsem, name='delete_trainsem'),
     path("delete_confwork/<int:pk>/", views.delete_confwork, name='delete_confwork'),
     path("delete_extserv/<int:pk>/", views.delete_extserv, name='delete_extserv'),
+
+    #----ADD FACULTY PATH
+    path("staff/add_faculty", views.add_faculty, name = "staff_add_faculty"),
 ]
 
 urlpatterns += static(settings.UPLOAD_URL, document_root=settings.UPLOAD_ROOT)

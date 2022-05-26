@@ -100,6 +100,17 @@ def add_user(request):
     form = CreateUserForm()
     return render(request, 'add_user.html', {'form': form})
 
+#----------------------ADD FACULTY USER
+def add_faculty(request):
+    if request.method == "POST":
+        form = CreateFacultyForm(request.POST)
+        if form.is_valid():
+            form.save()
+    
+    form = CreateFacultyForm()
+    return render(request, 'PES_STAFF_add_faculty.html', {'form': form})
+
+
 def add_educ_att(request):
     user = User.objects.get(id=request.user.id)
     
