@@ -9,9 +9,7 @@
 </head>
 <body>
 {% include 'admin_navbar.html' %}
-<div class="container mt-3">
-    <h2>Striped Rows</h2>
-    <p>The .table-striped class adds zebra-stripes to a table:</p>            
+<div class="container mt-3">           
     <table class="table table-striped">
       <thead>
         <tr>
@@ -26,26 +24,20 @@
         </tr>
       </thead>
       <tbody>
+        {% for users in Users %}
+        <!-- {% if user.is_authenticated %} -->
         <tr>
-          <td>John</td>
-          <td>Doe</td>
-          <td>john@example.com</td>
-          <td>MCSU</td>
-          <td>Faculty</td>
-          <td><button type="button" class="btn btn-secondary">Update</button></td>
+          <td>{{ users.first_name }}</td>
+          <td>{{ users.last_name }}</td>
+          <td>{{ users.email }}</td>
+          <td>{{ users.unit }}</td>
+          <td>{{ users.position }}</td>
+          <td><a href="{% url 'base:edit_user' pk=users.pk %}" role="button"> Edit </a></td>   
           <td><button type="button" class="btn btn-secondary">Update</button></td>
           <td><button type="button" class="btn btn-secondary">Update</button></td>
         </tr>
-        <tr>
-          <td>Mary</td>
-          <td>Moe</td>
-          <td>mary@example.com</td>
-        </tr>
-        <tr>
-          <td>July</td>
-          <td>Dooley</td>
-          <td>july@example.com</td>
-        </tr>
+        <!-- {% endif %} -->
+      {% endfor%}
       </tbody>
     </table>
   </div>

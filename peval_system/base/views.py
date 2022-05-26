@@ -1,9 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest, HttpRequest
+from django.contrib.auth.forms import UserCreationForm
 from django.template import loader
 from django.contrib import auth, messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth.mixins import LoginRequiredMixin
+# from django.contrib.auth import get_user_model
 from .models import *
+# from users.models import User
 from .forms import *
 
 # Create your views here.
@@ -59,9 +62,11 @@ def admin_dash(request):
     conf_work_form = ConfWorkForm()
     ext_serv_form = ExtServForm()
     faculty_serv_rec_form = FacultyServRecForm()
-
+    users = User.objects.all()
+    print(users)
 
     context = {
+        'Users': users,
         'EducAtt' : educ_att,
         'WorkExp' : work_exp,   
         'AccEvent' : acc_event,
@@ -403,7 +408,7 @@ def edit_user(request, pk):
                 'tempForm':tempForm,		
                 }
                 # INCLUDE EDIT USER HTML
-        return render(request, 'update_user.html', context)
+        return render(request, 'edit_user.html', context)
   
 def edit_educ_att(request, pk):
     entry = get_object_or_404(EducationalAttainment, pk=pk)

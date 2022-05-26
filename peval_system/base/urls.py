@@ -9,6 +9,7 @@ from django.views.static import serve
 
 
 
+
 app_name = 'base'
 
 urlpatterns =[
@@ -26,6 +27,7 @@ urlpatterns =[
     path("add_confwork", views.add_confwork, name='add_confwork'),
     path("add_extserv", views.add_extserv, name='add_extserv'),
 
+    path("edit_user/<int:pk>/", views.edit_user, name='edit_user'),
     path("edit_educ_att/<int:pk>/", views.edit_educ_att, name='edit_educ_att'),
     path("edit_workexp/<int:pk>/", views.edit_workexp, name='edit_workexp'),
     path("edit_acc_events/<int:pk>/", views.edit_acc_events, name='edit_acc_events'),
