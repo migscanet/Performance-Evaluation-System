@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Add Educ Att</title>
+        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+
+        <link rel="stylesheet" href="static/css/styles.css">
+        <!--<link rel="icon" href="static/img/pghlogo.png" /> -->
+        <style>
+            table {
+              border-collapse: collapse;
+              border-spacing: 0;
+              width: 100%;
+              height:5%;
+              border: 1px solid #ddd;
+            }
+        </style>
+    </head>
+
+<body>
+    {% include '_navbar.html' %}
+    <section> 
+        {% if user.is_authenticated %}
+            {{user.first_name}}
+            {{user.last_name}}
+            ({{user.get_role_display}})
+
+            <a href="{% url 'base:edit_pers_info' pk=user.pk %}"> Edit Personal Info</a>
+        {% endif %}
+    </section>           
+        
+ 
+    
+
+<script src="static/js/jquery.min.js"></script>
+<script src="static/bootstrap/js/bootstrap.min.js"></script>
+</body>

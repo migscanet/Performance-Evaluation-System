@@ -59,6 +59,17 @@ ACCOMPLISHMENTREPORTCHOICES=(
     ('8', 'Planned Activities and Announcements')
 )
 
+ACADEMICYEARCHOICES=(
+    ('1', '2020-2021'),
+    ('2', '2021-2022'),
+    ('3', '2022-2023'),
+    ('4', '2023-2024'),
+    ('5', '2024-2025'),
+    ('6', '2025-2026'),
+)
+
+
+
 class EducationalAttainment(models.Model):
     user = models.ForeignKey(User, related_name='EducationalAttainment', on_delete = models.CASCADE)
     institution = models.CharField(max_length=240)
@@ -237,6 +248,7 @@ class ExtensionServices(models.Model):
 class FacultyServiceRecord(models.Model):
     #Foreignkey of SET
     #set_score = models.DecimalField(decimal_places=2, null=True, blank=True)
+    user = models.ForeignKey(User, related_name='FacultyServiceRecord', on_delete=models.CASCADE)
     course_code = models.CharField(max_length=5)
     section = models.CharField(max_length=4)
     semester = models.CharField(max_length=10, choices=SEMESTERCHOICES, default=SEMESTERCHOICES[0])
@@ -245,7 +257,10 @@ class FacultyServiceRecord(models.Model):
     time = models.TimeField(null=True, blank=True)
     number_students = models.IntegerField(null=True, blank=True)
     comments_remarks = models.CharField(max_length=400, blank=True)
-
+    set = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    syllabus = models.FileField(upload_to ='uploads/facultyservrec')
+    
+    is_approved = models.BooleanField(default=False)
     def __str__(self):
         return '{} {} {} {}'.format(self.course_code,self.semester,self.school_year)
 

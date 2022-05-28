@@ -4,7 +4,10 @@ from django.template import loader
 from django.contrib import auth, messages
 from .models import *
 from .forms import *
-
+from users.forms import *
+from users.views import *
+import tkinter as tk
+from tkinter import simpledialog
 # Create your views here.
 def view_profile(request):
     educ_att = EducationalAttainment.objects.all()
@@ -325,6 +328,38 @@ def add_extserv(request):
         print('not user')
         form = ExtServForm()
         return render(request, 'add_cred.html', {'form': form})  
+
+def add_facultyservrec(request):
+    user = User.objects.get(id=request.user.id)
+    
+    if user:    
+        print(user)
+        if request.method == "POST":
+            tempform = FacultyServRecForm(request.POST, request.FILES)
+
+            if tempform.is_valid():
+                instance = tempform.save(commit=False)	
+                instance.user = user
+                instance.save()
+                #message.success(request, "")
+                print('valid')
+                return redirect('/profile')
+            else:
+                print('not valid')
+                #message.error(request, "Failed.")
+                pass
+            context = {}
+            context['form'] = FacultyServRecForm()
+            template = loader.get_template('add_cred.html')
+            return HttpResponse(template.render(context, request))
+        else:
+            print('not post')
+            form = FacultyServRecForm()
+            return render(request, 'add_cred.html', {'form': form})
+    else:
+        print('not user')
+        form = FacultyServRecForm()
+        return render(request, 'add_cred.html', {'form': form})  
   
 def edit_educ_att(request, pk):
     entry = get_object_or_404(EducationalAttainment, pk=pk)
@@ -526,6 +561,28 @@ def edit_extserv(request, pk):
                 }
         return render(request, 'edit_cred.html', context)
 
+def edit_facservrec(request, pk):
+    entry = get_object_or_404(FacultyServiceRecord, pk=pk)
+    
+    if request.method == "POST":
+        #print('post')
+        tempForm = FacultyServRecForm(request.POST, request.FILES, instance=entry)
+        if tempForm.is_valid():
+            print('valid')       
+            instance = tempForm.save(commit=False)           
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/profile")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = FacultyServRecForm(instance=entry)
+        context = {
+                'tempForm':tempForm,		
+                }
+        return render(request, 'edit_cred.html', context)
+
 def delete_educ_att(request, pk):
     EducationalAttainment.objects.filter(pk=pk).delete()
     return redirect('/profile')
@@ -562,4 +619,138 @@ def delete_extserv(request, pk):
     ExtensionServices.objects.filter(pk=pk).delete()
     return redirect('/profile')
 
+def delete_facservrec(request, pk):
+    FacultyServiceRecord.objects.filter(pk=pk).delete()
+    return redirect('/profile')
 
+
+def admin_dash(request):
+    educ_att = EducationalAttainment.objects.all()
+    work_exp = WorkExperience.objects.all()
+    acc_event = AccomplishmentsEvents.objects.all()
+    pubs = Publications.objects.all()
+    research_grants = ResearchGrants.objects.all()
+    lic_exams = LicensureExam.objects.all()
+    train_sem = TrainingSeminars.objects.all()
+    conf_work = ConferenceWorkshops.objects.all()
+    ext_serv = ExtensionServices.objects.all()
+    faculty_serv_rec = FacultyServiceRecord.objects.all()
+    create_user_form = PersonalInfoForm()
+    educ_form = EducAttForm()
+    work_exp_form = WorkExpForm()
+    acc_events_form = AccEventsForm()
+    pub_form = PubForm()
+    research_grants_form = ResearchGrantsForm()
+    lic_exam_form = LicExamForm()
+    train_sem_form = TrainSemForm()
+    conf_work_form = ConfWorkForm()
+    ext_serv_form = ExtServForm()
+    faculty_serv_rec_form = FacultyServRecForm()
+    users = User.objects.all()
+    print(users)
+
+    context = {
+        'Users': users,
+        'EducAtt' : educ_att,
+        'WorkExp' : work_exp,   
+        'AccEvent' : acc_event,
+        'Pub' : pubs,   
+        'ResGrant' : research_grants,
+        'LicExam' : lic_exams,   
+        'TrainSem' : train_sem,
+        'ConfWork' : conf_work,    
+        'ExtServ' : ext_serv,    
+        'FacServRec' : faculty_serv_rec,
+        'create_user_form': create_user_form,
+        'educ_form': educ_form,
+        'work_exp_form': work_exp_form,
+        'acc_events_form': acc_events_form,
+        'pub_form': pub_form,
+        'research_grants_form': research_grants_form,
+        'lic_exam_form': lic_exam_form,
+        'train_sem_form': train_sem_form,
+        'conf_work_form': conf_work_form,
+        'ext_serv_form': ext_serv_form,
+        'faculty_serv_rec_form': faculty_serv_rec_form
+    }
+    return render(request, 'admin_dash.html', context)
+
+
+def edit_user(request, pk):
+    entry = get_object_or_404(User, pk=pk)
+
+    if request.method == "POST":
+        tempForm = UserUpdateForm(request.POST, request.FILES, instance = entry)
+        if tempForm.is_valid():
+            print('valid')
+            instance = tempForm.save(commit=False)           
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/admin_dash")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = UserUpdateForm(instance=entry)
+        context = {
+                'tempForm':tempForm,		
+                }
+                # INCLUDE EDIT USER HTML
+        return render(request, 'edit_user.html', context)
+
+def edit_pers_info(request, pk):
+    entry = get_object_or_404(User, pk=pk)
+
+    if request.method == "POST":
+        tempForm = PersonalInfoForm(request.POST, request.FILES, instance = entry)
+        if tempForm.is_valid():
+            print('valid')
+            instance = tempForm.save(commit=False)           
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/profile")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = PersonalInfoForm(instance=entry)
+        context = {
+                'tempForm':tempForm,		
+                }
+                # INCLUDE EDIT USER HTML
+        return render(request, 'edit_user.html', context)
+
+def view_perf_info(request):
+    pers_info = User.objects.all()
+
+    context = {
+        'pers_info' : pers_info,
+    }
+
+    return render(request, 'view_pers_info.html', context)
+
+def update_set(request, pk):
+    record = get_object_or_404(FacultyServiceRecord, pk=pk)
+    
+    
+    if request.method == "POST":
+        #print('post')
+        tempForm = SETForm(request.POST, request.FILES, instance=record)
+        if tempForm.is_valid():
+            print('valid')       
+            instance = tempForm.save(commit=False)                    
+            instance.save()
+            messages.success(request, "Changes saved successfully!")       
+            return redirect("/admin_dash")                    
+        else:
+            messages.error(request, "Unsuccessful")
+    else:
+        print('not post?')
+        tempForm = SETForm(instance=record)
+        context = {
+                'tempForm':tempForm,		
+                }
+        return render(request, 'edit_cred.html', context)
+
+
+   

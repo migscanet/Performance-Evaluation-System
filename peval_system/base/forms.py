@@ -59,6 +59,13 @@ class FacultyServRecForm(forms.ModelForm):
     class Meta:
         model = FacultyServiceRecord
         #exclude = ('blood_requisition_request',)
-        exclude = ['user', 'is_approved', 'is_verified', 'comments_remarks']
+        exclude = ['set', 'user', 'is_approved', 'comments_remarks']
+
+
+class SETForm(forms.ModelForm):
+    class Meta:
+        model = FacultyServiceRecord
+        #exclude = ('blood_requisition_request',)
+        fields = ['set']
 
 

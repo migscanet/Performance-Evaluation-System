@@ -558,6 +558,62 @@
                 </tbody>
             </table>  
         </div> 
+
+        <div id="FacServRec" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                <tr>   
+                    <td>
+                        <a href="{% url 'base:add_facultyservrec' %}" role="button">Add Extension Service</a>
+                    </td>
+                </tr>
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> Course Code </th>                         
+                        <th> Section </th>
+                        <th> Semester </th>
+                        <th> School Year </th>
+                        <th> Schedule </th>
+                        <th> Student Enrolled </th>  
+                        
+                        <th> SET </th>
+                        <th> Syllabus </th>
+                        <th> Status </th> 
+                        <th> Comments/Remarks </th>   
+                </tr>
+                
+                <tbody>                   
+                        {% for fac_servrec in FacServRec %}
+                        {% if user.is_authenticated %}   
+                        {% if fac_servrec.user.email == user.email %}                         
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ fac_servrec.course_code }} </td>                         
+                                <td>{{ fac_servrec.section }}</td>
+                                <td>{{ fac_servrec.semester }}</td>                       
+                                <td>{{ fac_servrec.school_year }}</td>
+                                <td>{{ fac_servrec.time }} {{ fac_servrec.days }}</td>
+                                <td>{{ fac_servrec.number_students }}</td>
+
+                                <td>{{ fac_servrec.set }}</td>
+                                <td>{{ fac_servrec.syllabus }}</td>
+                                <td>{{ fac_servrec.is_approved }}</td>                                
+                                <td>{{ fac_servrec.comments_remarks }}</td>                               
+                              
+                                <td>
+                                    <a href="{% url 'base:edit_facservrec' pk=fac_servrec.pk %}" role="button"> Edit </a>                       
+                                </td>
+                                <td>
+                                    <a href="{% url 'base:delete_facservrec' pk=fac_servrec.pk %}" role="button" onclick="return confirm('Are you sure you want to delete this credential?');"> Delete </a>                       
+                                </td> 
+                                
+                                                                                            
+                            </tr>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>  
+        </div> 
     </section>           
         
     
