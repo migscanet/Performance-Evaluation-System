@@ -15,10 +15,14 @@
     </head>
 
 <body>
+    <div class="col-md-6 mx-auto">
     <form method="POST" class="form-group" enctype="multipart/form-data">
         {% csrf_token %} 
+        <h1 align="center">Create Faculty User</h1>
         {{form|crispy}}
         <button type="submit" class="btn btn-success">Submit</button>
     </form>
+    </div>
+
 </body>
 </html>

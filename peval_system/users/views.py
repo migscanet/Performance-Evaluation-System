@@ -29,6 +29,8 @@ def login(request):
                 print(role)
                 auth.login(request, x)
                 return redirect('/admin_dash')
+            else:
+                return render(request, "login2.html")
             #elif is_unithead == True:
                 auth.login(request, x)
                 return redirect('/unit_head_dash')

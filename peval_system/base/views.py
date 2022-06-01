@@ -8,7 +8,9 @@ from users.forms import *
 from users.views import *
 import tkinter as tk
 from tkinter import simpledialog
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+@login_required(login_url='/login',)
 def view_profile(request):
     educ_att = EducationalAttainment.objects.all()
     work_exp = WorkExperience.objects.all()
@@ -39,7 +41,7 @@ def view_profile(request):
 
     return render(request, 'profile.html', context)
     
-
+@login_required(login_url='/login',)
 def add_educ_att(request):
     user = User.objects.get(id=request.user.id)
     
@@ -624,7 +626,7 @@ def delete_facservrec(request, pk):
     FacultyServiceRecord.objects.filter(pk=pk).delete()
     return redirect('/faculty_load')
 
-
+@login_required(login_url='/login',)
 def admin_dash(request):
     educ_att = EducationalAttainment.objects.all()
     work_exp = WorkExperience.objects.all()
@@ -647,7 +649,7 @@ def admin_dash(request):
     conf_work_form = ConfWorkForm()
     ext_serv_form = ExtServForm()
     faculty_serv_rec_form = FacultyServRecForm()
-    users = User.objects.all()
+    users = User.objects.filter(role=ROLECHOICES[0])
     print(users)
 
     context = {
@@ -721,6 +723,7 @@ def edit_pers_info(request, pk):
                 # INCLUDE EDIT USER HTML
         return render(request, 'edit_user.html', context)
 
+@login_required(login_url='/login',)
 def view_perf_info(request):
     pers_info = User.objects.all()
 
@@ -776,6 +779,7 @@ def add_facultyservrec_clerk(request):
         form = ClerkFacultyServRecForm()
         return render(request, 'add_facultyservrecord.html', {'form': form})
     
+@login_required(login_url='/login',)
 def faculty_load(request):
     faculty_serv_rec = FacultyServiceRecord.objects.all()
    

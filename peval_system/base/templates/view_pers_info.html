@@ -25,15 +25,62 @@
 <body>
     {% include '_navbar.html' %}
     <section> 
-        {% if user.is_authenticated %}
-            {{user.last_name}} {{user.suffix}}, {{user.first_name}} {{user.middle_name}}
-            <br>
-            ({{user.get_role_display}})
-
-            <br><br>
-            
-
-            <a href="{% url 'base:edit_pers_info' pk=user.pk %}"> Edit Personal Info</a>
+        {% if user.is_authenticated %}      
+        <div id="PersonalInfo" class="tabcontent" style="margin-left: 340px;"> 
+            <table class="table table-hover text-nowrap" style="width: 1110px;">
+                <div class="mx-auto">
+                    <h1 style="color: rgb(120, 5, 5);font-size: 40px;font-family: Oswald, sans-serif; font-weight: bold;">Personal Information</h1>
+                    <br>
+                </div>
+                {% if user.is_authenticated %}
+                <tbody>
+               
+                <tr><th style="text-align: left;"> Rank </th> </tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_faculty_rank_display }}</td></tr>
+                <tr><th style="text-align: left;"> Classification </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_faculty_classification_display }}</td></tr>
+                <th style="text-align: left;">Tenure</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_faculty_tenure_display }}</td></tr>
+                <tr><th style="text-align: left;"> Status </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_faculty_tenure_display }}</td></tr>
+                <tr><th style="text-align: left;"> Name </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}</td></tr>
+                <th style="text-align: left;">Suffix</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.suffix }}</td></tr>
+                <tr><th style="text-align: left;"> Sex </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_sex_display }}</td></tr>
+                <tr><th style="text-align: left;"> Birthday </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.birth_date }}</td></tr>
+                <th style="text-align: left;">Birthplace</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.birth_place }}</td></tr>
+                <tr><th style="text-align: left;"> Present Address </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.present_address }}</td></tr>
+                <th style="text-align: left;">Permanent Address</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.permanent_address }}</td></tr>
+                <tr><th style="text-align: left;"> Civil Status </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.get_civil_status_display }}</td></tr>
+                <tr><th style="text-align: left;"> Religion </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.religion }}</td></tr>
+                <th style="text-align: left;">Phone Number</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.phone_number }}</td></tr>
+                <tr><th style="text-align: left;"> Landline Number </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.landline_number }}</td></tr>
+                <th style="text-align: left;">Email</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.email }}</td></tr>
+                <tr><th style="text-align: left;"> Alternative Email </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.alternative_email }}</td></tr>
+                <tr><th style="text-align: left;"> Emergency Contact Name </th></tr>
+                <tr><td style="background-color: white; text-align: left;">{{ user.emergency_contact_name }}</td></tr>
+                <th style="text-align: left;">Emergency Contact Number</th>
+                <tr><td style="background-color: white; text-align: left;">{{ user.emergency_contact_number }}</td></tr>
+            </tbody> 
+                
+                {% endif %}
+    
+            </table>  
+            <a href="{% url 'base:edit_pers_info' pk=user.pk %}" class="btn btn-info btn-small" role="button"> Edit </a></td>
+            <!-- <a href="{% url 'base:add_educ_att' %}" class="btn btn-info btn-small" role="button">Add</a> -->
+            </div>
         {% endif %}
     </section>           
         

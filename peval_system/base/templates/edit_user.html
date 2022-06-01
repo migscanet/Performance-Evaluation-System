@@ -25,17 +25,19 @@
 <body>
     {% include '_navbar.html' %}
     <section> 
+        <div class="col-md-6 mx-auto">
         <form method="POST" class="form-group" enctype="multipart/form-data">
             {% csrf_token %}
             <div class>
             <div class>
-            <h1 align="center">Add Credential</h1>
+            <h1 align="center">Edit Personal Info</h1>
             <br>
             {% include '_baseform.html' with form=tempForm %}
                 
             <button type="submit">Save</button>
             </div>
         </form>
+        </div>
     </section>           
         
 <script type="text/javascript">

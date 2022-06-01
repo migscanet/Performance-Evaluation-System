@@ -62,8 +62,19 @@
                         <td>{{ fac_servrec.number_students }}</td>
 
                         <td>{{ fac_servrec.set }}</td>
-                        <td>{{ fac_servrec.syllabus }}</td>
-                        <td>{{ fac_servrec.is_approved }}</td>                                
+                        <td>
+                            <a href="{{fac_servrec.syllabus.url}}" target="_blank">
+                            <img height="100" width="200" src="{{UPLOAD_URL}}{{ fac_servrec.syllabus }}">
+                            </a>
+                        </td>
+                        
+                        <td> 
+                            {% if conf_work.is_approved == True %}
+                                &#9989;
+                            {% else %}
+                                &#10060;
+                            {% endif %}
+                        </td>                           
                         <td>{{ fac_servrec.comments_remarks }}</td>                               
                       
                         <td>

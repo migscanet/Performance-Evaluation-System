@@ -25,6 +25,7 @@
 <body>
     {% include '_navbar.html' %}
     <section> 
+        <div class="col-md-6 mx-auto">
         <form method="POST" class="form-group" enctype="multipart/form-data">
             {% csrf_token %}
             <div class>
@@ -36,6 +37,7 @@
             <button type="submit">Save</button>
             </div>
         </form>
+    </div>
     </section>           
         
 <script type="text/javascript">
