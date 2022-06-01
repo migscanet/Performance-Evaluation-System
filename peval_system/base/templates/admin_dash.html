@@ -16,11 +16,11 @@
           <th>Firstname</th>
           <th>Lastname</th>
           <th>Email</th>
-          <th>Unit</th>
-          <th>Position</th>
+          <th>Department</th>
+          
           <th>Update User</th>
-          <th>Update FSR</th>
-          <th>Update SET</th>
+          
+          <!--<th>Update SET</th>-->
         </tr>
       </thead>
       <tbody>
@@ -30,11 +30,11 @@
           <td>{{ users.first_name }}</td>
           <td>{{ users.last_name }}</td>
           <td>{{ users.email }}</td>
-          <td>{{ users.unit }}</td>
-          <td>{{ users.position }}</td>
+          <td>{{ users.get_department_display }}</td>
+          
           <td><a href="{% url 'base:edit_user' pk=users.pk %}" role="button"> Edit </a></td>   
-          <td><button type="button" class="btn btn-secondary">Update</button></td>
-          <td><a href="{% url 'base:update_set' pk=users.pk %}" role="button">Update</button></td>
+          
+          <!--<td><a href="{% url 'base:update_set' pk=users.pk %}" role="button">Update</button></td>-->
         </tr>
         <!-- {% endif %} -->
       {% endfor%}

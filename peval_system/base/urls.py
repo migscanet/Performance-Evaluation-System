@@ -52,6 +52,8 @@ urlpatterns =[
     path("edit_user/<int:pk>/", views.edit_user, name='edit_user'),
     path("edit_pers_info/<int:pk>/", views.edit_pers_info, name='edit_pers_info'),
     path("update_set/<int:pk>/", views.update_set, name='update_set'),
+    path("add_facultyservrec_clerk/", views.add_facultyservrec_clerk, name='add_facultyservrec_clerk'),
+    path("faculty_load/", views.faculty_load, name='faculty_load'),
 
 ]
 

@@ -7,8 +7,8 @@ from .forms import *
 
 def login(request):
     if request.method=='POST':
-        email=request.POST['email']
-        password=request.POST['password']		
+        email=request.POST.get('email')
+        password=request.POST.get('password')		
         x = auth.authenticate(email=email, password=password)		
         user = get_object_or_404(User, email=email)		
         
@@ -20,6 +20,7 @@ def login(request):
         #is_unithead = user.is_UnitHead
         #is_depthead = user.is_DepartmentHead
         if x is not None:
+            print("not none")
             if role == "1": #Faculty
                 print(role)
                 auth.login(request, x)
@@ -41,7 +42,7 @@ def login(request):
             messages.info(request, "invalid credentials")
             return redirect('/login')
     else:		
-        return render(request, "login.html")
+        return render(request, "login2.html")
 
 def logout_user(request):
     logout(request)
@@ -52,7 +53,21 @@ def create_user(request):
         form = UserUpdateForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('admin_dash')
+            print('valid')
+            return redirect('/admin_dash')
+        else:
+            print('not valid')
+            form = UserUpdateForm()
+            context = {
+            'form':form,		
+            }
+            return render(request, 'create_user.html', context)
     else:
-        form = UserUpdateForm()
-        return render(request, 'create_user.html', {'form': form})
+            print('not valid')
+            form = UserUpdateForm()
+            context = {
+            'form':form,		
+            }
+            return render(request, 'create_user.html', context)
+
+

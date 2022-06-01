@@ -1,0 +1,89 @@
+{% load static %}
+{%load crispy_forms_tags%}
+<!DOCTYPE html>
+<html>
+
+{% include '_admin_navbar.html' %}
+    <head>
+        <title>Create New User</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    </head>
+
+<body>
+    <div id = "PES_add_faculty_fields" class = "form-group">
+        <br>
+        <h3 class = "faculty_Label">PERSONAL INFORMATION</h3>
+        <br>
+        <br>
+        
+        <form method = "POST" class="form-group" enctype="multipart/form-data">
+                {% csrf_token %}
+                <!----ROW 1-->
+                <div class="form-row">
+                    <div class="col">
+                        {{ form.email|as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.password|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.first_name|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.last_name|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.middle_name|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.suffix|as_crispy_field }}
+                    </div>
+                </div>    
+                
+                <!----ROW 1-->
+                <div class="form-row">
+                    <div class="col">
+                        {{ form.department|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.faculty_rank|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.faculty_classification|as_crispy_field }}
+                    </div>
+    
+                    <div class="col">
+                        {{ form.faculty_tenure|as_crispy_field }}
+                    </div>
+                    <div class="col">
+                        {{ form.faculty_status|as_crispy_field }}
+                    </div>
+    
+                </div>
+              
+    
+            
+            <br>
+            <br>
+        
+          <button type="submit" class="btn btn-success" >
+            Add Faculty
+          </button>
+        </form>
+       
+        <br>
+        <br>
+    </div>
+</body>
+</html>

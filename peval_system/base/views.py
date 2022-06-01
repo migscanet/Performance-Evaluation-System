@@ -560,28 +560,29 @@ def edit_extserv(request, pk):
                 'tempForm':tempForm,		
                 }
         return render(request, 'edit_cred.html', context)
+        
 
 def edit_facservrec(request, pk):
     entry = get_object_or_404(FacultyServiceRecord, pk=pk)
     
     if request.method == "POST":
         #print('post')
-        tempForm = FacultyServRecForm(request.POST, request.FILES, instance=entry)
+        tempForm = ClerkFacultyServRecForm(request.POST, request.FILES, instance=entry)
         if tempForm.is_valid():
             print('valid')       
             instance = tempForm.save(commit=False)           
             instance.save()
             messages.success(request, "Changes saved successfully!")       
-            return redirect("/profile")                    
+            return redirect("/faculty_load")                    
         else:
             messages.error(request, "Unsuccessful")
     else:
         print('not post?')
-        tempForm = FacultyServRecForm(instance=entry)
+        tempForm = ClerkFacultyServRecForm(instance=entry)
         context = {
                 'tempForm':tempForm,		
                 }
-        return render(request, 'edit_cred.html', context)
+        return render(request, 'edit_facultyservrec.html', context)
 
 def delete_educ_att(request, pk):
     EducationalAttainment.objects.filter(pk=pk).delete()
@@ -621,7 +622,7 @@ def delete_extserv(request, pk):
 
 def delete_facservrec(request, pk):
     FacultyServiceRecord.objects.filter(pk=pk).delete()
-    return redirect('/profile')
+    return redirect('/faculty_load')
 
 
 def admin_dash(request):
@@ -683,7 +684,7 @@ def edit_user(request, pk):
         tempForm = UserUpdateForm(request.POST, request.FILES, instance = entry)
         if tempForm.is_valid():
             print('valid')
-            instance = tempForm.save(commit=False)           
+            instance = tempForm.save(commit=True)           
             instance.save()
             messages.success(request, "Changes saved successfully!")       
             return redirect("/admin_dash")                    
@@ -696,7 +697,7 @@ def edit_user(request, pk):
                 'tempForm':tempForm,		
                 }
                 # INCLUDE EDIT USER HTML
-        return render(request, 'edit_user.html', context)
+        return render(request, 'edit_facultyservrec.html', context)
 
 def edit_pers_info(request, pk):
     entry = get_object_or_404(User, pk=pk)
@@ -750,7 +751,40 @@ def update_set(request, pk):
         context = {
                 'tempForm':tempForm,		
                 }
-        return render(request, 'edit_cred.html', context)
+        return render(request, 'edit_facultyservrec.html', context)
+
+def add_facultyservrec_clerk(request):    
+    if request.method == "POST":
+        tempform = ClerkFacultyServRecForm(request.POST, request.FILES)
+
+        if tempform.is_valid():
+            instance = tempform.save(commit=False)	           
+            instance.save()
+            #message.success(request, "")
+            print('valid')
+            return redirect('/faculty_load')
+        else:
+            print('not valid')
+            #message.error(request, "Failed.")
+            pass
+        context = {}
+        context['form'] = ClerkFacultyServRecForm()
+        template = loader.get_template('faculty_load.html')
+        return HttpResponse(template.render(context, request))
+    else:
+        print('not post')
+        form = ClerkFacultyServRecForm()
+        return render(request, 'add_facultyservrecord.html', {'form': form})
+    
+def faculty_load(request):
+    faculty_serv_rec = FacultyServiceRecord.objects.all()
+   
+    context = {
+        'FacServRec' : faculty_serv_rec,    
+    }
+
+    return render(request, 'faculty_load.html', context)
+
 
 
    

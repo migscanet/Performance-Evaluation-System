@@ -21,9 +21,11 @@ class UserUpdateForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.helper = FormHelper(self)
-
+    
     class Meta:
 
         model = User
         exclude = ['password']
-        fields = ['first_name', 'last_name', 'email', 'alternative_email', 'faculty_rank', 'faculty_classification', 'faculty_tenure', 'faculty_status', 'password']
+        fields = ['first_name', 'middle_name', 'last_name', 'suffix', 'email', 'alternative_email', 'faculty_rank', 'department', 'faculty_classification', 'faculty_tenure', 'faculty_status']
+
+     
