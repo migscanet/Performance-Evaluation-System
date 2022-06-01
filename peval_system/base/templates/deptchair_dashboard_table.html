@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> 
+
+        <!-- <link rel="stylesheet" href="{% static '/css/style_dept_head.css' %"> -->
+        <style>
+            .content{
+                margin-left: 225px;
+                margin-top: -650px;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 95%;
+                height:5%;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #AFAFAF;
+                text-align: center;
+                padding: 4px;
+            }
+            td {
+                padding: 3.5px;
+            }
+        </style>
+
+</head>
+<body>
+	 {% include '_navbar.html' %}
+     {% include 'sidebar_deptchair.html' %}
+    
+<div class="content">
+     <h2>Accomplishment Count</h2>
+            <table id="filter_table">
+                <tr>
+                    <th style="background-color: white; text-align: left">Department Unit</th>
+                    <th style="background-color: white; text-align: left">Start Date</th>
+                    <th style="background-color: white; text-align: left">End Date</th>
+                    <th style="background-color: white; text-align: left">   </th>
+                </tr>
+                <tr>
+                    <td>
+                        <select name="dept_unit" id="dept_unit">
+                            <option value="1">Chemistry Unit</option>
+                            <option value="2">Mathematical and Computational Sciences Unit</option>
+                            <option value="3">Physics and Geology Unit</option>
+                        </select>
+                    </td>
+                    <td><input type="date" name="start_date" style="width:225px"></td>
+                    <td><input type="date" name="end_date" style="width:225px"></td>
+                    <td><button id="filter_button" style="background-color:#0D6EFD"><font style="color:white">Filter</font></button></td>
+                </tr>
+            </table>
+
+            Current view:
+            <a role="button" id="graph_view" href="{% url 'base:deptchair_dashboard' %}">Overview</a>
+            <button id="list_view" style="background-color:#006100"><font style="color:white">Full List</font></button>   
+            
+            &nbsp; &nbsp; 
+            
+            Sort by: 
+            <select name="dept_unit" id="dept_unit">
+                <option value="1">Name of Faculty</option>
+                <option value="2">Accomplishment</option>
+                <option value="3">Accomplishment Type</option>
+                <option value="4">Start Date (Latest)</option>
+                <option value="5">End Date (Latest)</option>
+            </select>
+
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; 
+
+            <a href="{% url 'base:export_excel_accom' %}" role="button" id="export_button"style="background-color:#0D6EFD;align: right;width: 165px;padding:5px"><font style="color:white">Export as Excel file</font></a>
+
+            <br><br>
+            <input type="text" id="search_bar" onkeyup = "searchTable()" placeholder="Search" style="width:285px">
+
+            <br><br>
+            <table id="accomplishment_table">
+                <tr>
+                    <th style="width:200px">Name of Faculty</th>
+                    <th style="width:450px">Accomplishment</th>
+                    <th style="width:250px">Accomplishment Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                </tr>
+                <tbody>
+                    {% for accomplishment in accomplishments %}
+                <tr>
+                    <td>{{ accomplishment.user.first_name }} {{ accomplishment.user.last_name }}</td>
+                    <td>{{ accomplishment.accomplishment_title }}</td>
+                    <td>{{ accomplishment.type }}</td>
+                    <td>{{ accomplishment.start_date}}</td>
+                    <td>{{ accomplishment.end_date }}</td>
+                </tr>
+                
+                    {% endfor %}
+                </tbody>
+                
+            </table>
+</div>
+
+<script type="text/javascript">
+    function searchTable() {
+			var filter = document.getElementById("search_bar").value.toUpperCase();
+			var table = document.getElementById("accomplishment_table");
+			var tr = table.getElementsByTagName("tr");
+
+			for (var i = 1; i < tr.length; i++) {
+				var td = tr[i].getElementsByTagName("td")[0];
+				var txtValue = td.innerText;
+				if (txtValue.toUpperCase().includes(filter)) {
+					tr[i].style.display = "";
+				}
+				else {
+					tr[i].style.display = "none";
+				}
+			}
+	}
+    
+</script>
+
+</body>
+</html>
+
+
