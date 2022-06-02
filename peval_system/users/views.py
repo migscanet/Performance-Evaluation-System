@@ -4,6 +4,8 @@ from django.contrib import auth, messages
 from users.models import *
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from base.decorators import allowed_users
+from django.contrib.auth.models import Group
 # Create your views here.
 
 def login(request):
@@ -61,12 +63,15 @@ def logout_user(request):
     return redirect('/login')
 
 @login_required(login_url='/login',)
+@allowed_users(allowed_roles=['admin'])
 def create_user(request):
     if request.method == "POST":
         form = UserUpdateForm(request.POST)
         if form.is_valid():
             form.save()
             print('valid')
+            admin_group = Group.objects.get(name='faculty') 
+            admin_group.user_set.add(form)
             return redirect('/admin_dash')
         else:
             print('not valid')
@@ -82,5 +87,6 @@ def create_user(request):
             'form':form,		
             }
             return render(request, 'create_user.html', context)
+            
 
 

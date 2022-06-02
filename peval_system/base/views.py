@@ -10,9 +10,11 @@ import tkinter as tk
 from tkinter import simpledialog
 from django.contrib.auth.decorators import login_required
 from users.forms import AddClerkForm
+from django.contrib.auth.models import Group
 import xlwt
 # Create your views here.
 @login_required(login_url='/login',)
+@allowed_users(allowed_roles=['faculty'])
 def view_profile(request):
     educ_att = EducationalAttainment.objects.all()
     work_exp = WorkExperience.objects.all()
@@ -43,7 +45,7 @@ def view_profile(request):
 
     return render(request, 'profile.html', context)
     
-@login_required(login_url='/login',)
+
 def add_educ_att(request):
     user = User.objects.get(id=request.user.id)
     
@@ -649,6 +651,7 @@ def delete_facservrec(request, pk):
     return redirect('/faculty_load')
 
 @login_required(login_url='/login',)
+@allowed_users(allowed_roles=['admin'])
 def admin_dash(request):
     educ_att = EducationalAttainment.objects.all()
     work_exp = WorkExperience.objects.all()
@@ -747,6 +750,7 @@ def edit_pers_info(request, pk):
         return render(request, 'edit_user.html', context)
 
 @login_required(login_url='/login',)
+@allowed_users(allowed_roles=['faculty'])
 def view_perf_info(request):
     pers_info = User.objects.all()
 
@@ -803,6 +807,7 @@ def add_facultyservrec_clerk(request):
         return render(request, 'add_facultyservrecord.html', {'form': form})
     
 @login_required(login_url='/login',)
+@allowed_users(allowed_roles=['admin'])
 def faculty_load(request):
     faculty_serv_rec = FacultyServiceRecord.objects.all()
    
@@ -814,6 +819,8 @@ def faculty_load(request):
 
 
 # UNIT HEAD FUNCTIONALITIES
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unit_dash_view(request):
     user = User.objects.get(id=request.user.id)
 
@@ -821,6 +828,8 @@ def unit_dash_view(request):
         return render(request, 'unithead_dashboard.html')
     return render(request, 'unithead_dashboard.html')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unit_table_view(request):
     user = User.objects.get(id=request.user.id)
     accomplishments = AccomplishmentsEvents.objects.all()
@@ -831,6 +840,8 @@ def unit_table_view(request):
         }
     return render(request, 'unithead_dashboard_table.html', context)
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unit_faculty_view(request):
     user = User.objects.get(id=request.user.id)
     users = User.objects.all()
@@ -842,11 +853,15 @@ def unit_faculty_view(request):
 
         return render(request, 'unithead_faculty_list.html', context)
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unit_approval_view(request):
     user = User.objects.get(id=request.user.id)
     if(user.is_UnitHead == True):
         return render(request, 'unithead_pending_approvals.html')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unit_assignment_view(request):
     user = User.objects.get(id=request.user.id)
     users = User.objects.all()
@@ -859,6 +874,8 @@ def unit_assignment_view(request):
         return render(request, 'unithead_role_assignment.html', context)
 
 # DEPT CHAIR FUNCTIONALITIES
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_dash_view(request):
     user = User.objects.get(id=request.user.id)
 
@@ -866,6 +883,8 @@ def dept_dash_view(request):
         return render(request, 'deptchair_dashboard.html')
     return render(request, 'deptchair_dashboard.html')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_table_view(request):
     user = User.objects.get(id=request.user.id)
     accomplishments = AccomplishmentsEvents.objects.all()
@@ -876,6 +895,8 @@ def dept_table_view(request):
         }
     return render(request, 'deptchair_dashboard_table.html', context)
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_faculty_view(request):
     user = User.objects.get(id=request.user.id)
     users = User.objects.all()
@@ -886,11 +907,15 @@ def dept_faculty_view(request):
 
     return render(request, 'deptchair_faculty_list.html', context)
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_approval_view(request):
     user = User.objects.get(id=request.user.id)
     if(user.is_DepartmentHead == True):
         return render(request, 'deptchair_pending_approvals.html')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_assignment_view(request):
     user = User.objects.get(id=request.user.id)
     users = User.objects.all()
@@ -902,6 +927,8 @@ def dept_assignment_view(request):
 
         return render(request, 'deptchair_role_assignment.html', context)
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def dept_clerk_view(request):
     user = User.objects.get(id=request.user.id)
     
@@ -914,6 +941,8 @@ def dept_clerk_view(request):
                 instance.save()
                 instance.role = "4"
                 instance.save()
+                admin_group = Group.objects.get(name='admin') 
+                admin_group.user_set.add(instance)
                 #message.success(request, "")
                 print('valid')
                 return redirect('/deptchair_dashboard')
@@ -967,6 +996,8 @@ def export_excel_accom(request):
 
     return response
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
 def unithead_pending_approvals(request):
     user = User.objects.get(id=request.user.id)
 
@@ -1076,14 +1107,9 @@ def verify_facservrec(request,pk):
             en.save()
     return redirect('/unithead_pending_approvals')
 
-def approve_educ_att(request,pk):
-    entry = EducationalAttainment.objects.filter(pk=pk)
-    if entry:
-        for en in entry:
-            en.is_approved = True
-            en.save()
-    return redirect('/unithead_pending_approvals')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def deptchair_pending_approvals(request):
     user = User.objects.get(id=request.user.id)
 
@@ -1193,6 +1219,8 @@ def approve_facservrec(request,pk):
             en.save()
     return redirect('/deptchair_pending_approvals')
 
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['dept_head'])
 def deptchair_role_assign(request):    
     users = User.objects.all()
 
@@ -1205,45 +1233,58 @@ def deptchair_role_assign(request):
 def assign_deptchair(request,pk):
     user = User.objects.get(id=request.user.id)
     assign_deptchair = User.objects.filter(pk=pk)
+    faculty_group = Group.objects.get(name='faculty') 
+    deptchair_group = Group.objects.get(name='dept_head') 
+    
     if assign_deptchair:
         for assign in assign_deptchair:
+            print("ok")
             assign.is_DepartmentHead = True
             assign.is_Faculty = False
             assign.role = "3" #dept chair
             assign.save()
-        
+            deptchair_group.user_set.add(assign)
+            faculty_group.user_set.remove(assign)
+
         user.is_DepartmentHead = False
         user.is_Faculty = True
         user.role = "1" #faculty
         user.save()
+        
+        faculty_group.user_set.add(user) 
+        deptchair_group.user_set.remove(user)       
 
     return redirect('/login')
 
-def unithead_role_assign(request):
-    
+@login_required(login_url='/login',)
+@allowed_users(allowed_roles=['unit_head'])
+def unithead_role_assign(request):    
     users = User.objects.all()
-
     context = {
-        'users': users,
-        
+        'users': users,        
     }
-
     return render(request, 'unithead_role_assignment.html', context)
 
 def assign_unithead(request,pk):
     user = User.objects.get(id=request.user.id)
-    assign_deptchair = User.objects.filter(pk=pk)
-    if assign_deptchair:
-        for assign in assign_deptchair:
+    assign_unithead = User.objects.filter(pk=pk)
+    faculty_group = Group.objects.get(name='faculty') 
+    unithead_group = Group.objects.get(name='unit_head') 
+    if assign_unithead:
+        for assign in assign_unithead:
             assign.is_UnitHead = True
             assign.is_Faculty = False
             assign.role = "2" #unit chair
             assign.save()
+            unithead_group.user_set.add(assign)
+            faculty_group.user_set.remove(assign)
         
         user.is_UnitHead = False
         user.is_Faculty = True
         user.role = "1" #faculty
         user.save()
+        faculty_group.user_set.add(user) 
+        unithead_group.user_set.remove(user)     
 
     return redirect('/login')
 

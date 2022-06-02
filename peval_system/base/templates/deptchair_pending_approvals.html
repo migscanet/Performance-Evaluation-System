@@ -116,7 +116,7 @@
                                 </td>                            
                                 <td>{{ educ_att.comments_remarks }}</td>
                                 <td>
-                                    <a href="{% url 'base:verify_educ_att' pk=educ_att.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    <a href="{% url 'base:approve_educ_att' pk=educ_att.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                 </td>
                                                          
                                                                                           
@@ -182,7 +182,7 @@
                                     </td>    
                                     <td>{{ work_exp.comments_remarks }}</td>
                                     <td>
-                                        <a href="{% url 'base:verify_work_exp' pk=work_exp.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_work_exp' pk=work_exp.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                      
                                                                            
@@ -244,7 +244,7 @@
                                     </td>    
                                     <td>{{ acc_event.comments_remarks }}</td>
                                     <td>
-                                        <a href="{% url 'base:verify_acc_events' pk=acc_event.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_acc_events' pk=acc_event.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                     
                                    
@@ -352,7 +352,7 @@
                                     <td>{{ pubs.comments_remarks }}</td>
     
                                     <td>
-                                        <a href="{% url 'base:verify_pub' pk=pubs.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_pub' pk=pubs.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                    
                                     
@@ -429,7 +429,7 @@
                                     <td>{{ research_grants.comments_remarks }}</td>
                                   
                                     <td>
-                                        <a href="{% url 'base:verify_res_grant' pk=research_grants.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_res_grant' pk=research_grants.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                    
                                    
@@ -493,7 +493,7 @@
                                     <td>{{ lic_exams.comments_remarks }}</td>                               
                                   
                                     <td>
-                                        <a href="{% url 'base:verify_licexam' pk=lic_exams.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_licexam' pk=lic_exams.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                    
                                    
@@ -559,7 +559,7 @@
                                     </td>   
                                     <td>{{ train_sem.comments_remarks }}</td>                               
                                     <td>
-                                        <a href="{% url 'base:verify_trainsem' pk=train_sem.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_trainsem' pk=train_sem.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                                                    
                                    
@@ -641,7 +641,7 @@
                                     </td> 
                                     <td>{{ conf_work.comments_remarks }}</td>                               
                                     <td>
-                                        <a href="{% url 'base:verify_confwork' pk=conf_work.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_confwork' pk=conf_work.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                    
                                     
@@ -712,7 +712,7 @@
                                     <td>{{ ext_serv.comments_remarks }}</td>                               
                                   
                                     <td>
-                                        <a href="{% url 'base:verify_extserv' pk=ext_serv.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_extserv' pk=ext_serv.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                    
                                     
@@ -775,7 +775,7 @@
                                     <td>{{ fac_servrec.comments_remarks }}</td>                               
                                   
                                     <td>
-                                        <a href="{% url 'base:verify_facservrec' pk=fac_servrec.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                        <a href="{% url 'base:approve_facservrec' pk=fac_servrec.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
                                     </td>
                                     
                                     
@@ -790,28 +790,6 @@
 </div>     
 
 
-
-        <br><br>
-        <h4>Role Assignment for Unit Head</h4>
-        <table id="role_approval_table">
-                <tr>
-                    <th style="width:350px">Name of Faculty</th>
-                    <th style="width:500px">Department Unit</th>
-                    <th>Status</th>
-                </tr>
-                <tr>
-                    <td style="width:350px"></td>
-                    <td style="width:500px"></td>
-                    <td style="text-align: center">
-                        <select name="role_approval_status" id="approval_status">
-                            <option value="1">Pending</option>
-                            <option value="2">Approved</option>
-                            <option value="3">Rejected</option>
-                        </select>
-                    </td>
-                </tr>
-                
-            </table>
         
 </div>     
 <script>   

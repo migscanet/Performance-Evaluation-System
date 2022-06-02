@@ -51,7 +51,7 @@
                 <button class="tablink" onclick="openPage('TrainSem', this, 'red')">Training Seminars</button>
                 <button class="tablink" onclick="openPage('ConfWork', this, 'red')">Conference Workshops</button>
                 <button class="tablink" onclick="openPage('ExtServ', this, 'red')">ExtensionServices</button>
-                <button class="tablink" onclick="openPage('FacServRec', this, 'red')">FacultyServiceRecord</button>
+              
             </div>       
             <br>
             
@@ -80,6 +80,7 @@
                 <tbody>        
                        
                         {% for educ_att in EducAtt %}
+                        {% if user.department == educ_att.user.department %}
                         {% if educ_att.is_verified == False %}
                         
                         
@@ -123,6 +124,7 @@
                                                                                           
                             </tr>
                             {% endif %}
+                            {% endif %}
                         {% endfor %}
                    
                    
@@ -150,6 +152,7 @@
                     
                     <tbody>                   
                             {% for work_exp in WorkExp %}
+                            {% if user.department == work_exp.user.department %}
                             {% if work_exp.is_verified == False %}
                                                    
                                 <tr>                  
@@ -189,6 +192,7 @@
                                                                            
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -213,6 +217,8 @@
                     
                     <tbody>                   
                             {% for acc_event in AccEvent %}
+                            {% if user.department == acc_event.user.department %}
+
                             {% if acc_event.is_verified == False %}
                                                  
                                 <tr>                  
@@ -251,6 +257,7 @@
                                    
                                                                                                 
                                 </tr>
+                                {% endif %}
                                 {% endif %}
                         {% endfor %}
                     </tbody>
@@ -295,6 +302,8 @@
                     
                     <tbody>                   
                             {% for pubs in Pub %}
+                            {% if user.department == pubs.user.department %}
+
                             {% if pubs.is_verified == False %}
                                                 
                                 <tr>                  
@@ -361,6 +370,7 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -390,6 +400,8 @@
                     
                     <tbody>                   
                             {% for research_grants in ResGrant %}
+                            {% if user.department == research_grants.user.department %}
+
                             {% if research_grants.is_verified == False %}
                            
                                 <tr>                  
@@ -437,6 +449,7 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -461,6 +474,8 @@
                     
                     <tbody>                   
                             {% for lic_exams in LicExam %}
+                            {% if user.department == lic_exams.user.department %}
+
                             {% if lic_exams.is_verified == False %}
                                                 
                                 <tr>                  
@@ -501,6 +516,7 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -526,6 +542,8 @@
                     
                     <tbody>                   
                             {% for train_sem in TrainSem %}
+                            {% if user.department == train_sem.user.department %}
+
                             {% if train_sem.is_verified == False %}
                                            
                                 <tr>                  
@@ -567,6 +585,7 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -600,6 +619,8 @@
                     
                     <tbody>                   
                             {% for conf_work in ConfWork %}
+                            {% if user.department == conf_work.user.department %}
+
                             {% if conf_work.is_verified == False %}
                                            
                                 <tr>                  
@@ -650,6 +671,7 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
+                                {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
@@ -677,6 +699,8 @@
                     
                     <tbody>                   
                             {% for ext_serv in ExtServ %}
+                            {% if user.department == ext_serv.user.department %}
+
                             {% if ext_serv.is_verified == False %}
                                                 
                                 <tr>                  
@@ -720,73 +744,12 @@
                                                                                                 
                                 </tr>
                                 {% endif %}
-                        {% endfor %}
-                    </tbody>
-                </table>  
-            </div> 
-    
-            <div id="FacServRec" class="tabcontent"> 
-                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
-                  
-                    <tr>
-                            <!-- <th> Blood Code </th>   -->
-                            <th> User </th>
-                            <th> Course Code </th>                         
-                            <th> Section </th>
-                            <th> Semester </th>
-                            <th> School Year </th>
-                            <th> Schedule </th>
-                            <th> Student Enrolled </th>  
-                            
-                            <th> SET </th>
-                            <th> Syllabus </th>
-                            <th> Status </th> 
-                            <th> Comments/Remarks </th>  
-                        <th colspan="2"> Action </th>   
-                    </tr>
-                    
-                    <tbody>                   
-                            {% for fac_servrec in FacServRec %}
-                            {% if fac_servrec.is_verified == False %}
-                                                
-                                <tr>                  
-                                    <!-- <td>{{ blood.blood_code }}</td>    -->
-                                    <td>{{ fac_servrec.user.last_name }}, {{ fac_servrec.user.first_name }}</td> 
-
-                                    <td>{{ fac_servrec.course_code }} </td>                         
-                                    <td>{{ fac_servrec.section }}</td>
-                                    <td>{{ fac_servrec.semester }}</td>                       
-                                    <td>{{ fac_servrec.school_year }}</td>
-                                    <td>{{ fac_servrec.time }} {{ fac_servrec.days }}</td>
-                                    <td>{{ fac_servrec.number_students }}</td>
-    
-                                    <td>{{ fac_servrec.set }}</td>
-                                    <td>
-                                        <a href="{{fac_servrec.syllabus}}" target="_blank">
-                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ fac_servrec.syllabus }}">
-                                        </a>
-                                    </td>                                
-                                    <td> 
-                                        {% if fac_servrec.is_approved == True %}
-                                            &#9989;
-                                        {% else %}
-                                            &#10060;
-                                        {% endif %}
-                                    </td>                                                             
-                                    <td>{{ fac_servrec.comments_remarks }}</td>                               
-                                  
-                                    <td>
-                                        <a href="{% url 'base:verify_facservrec' pk=fac_servrec.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
-                                    </td>
-                                  
-                                    
-                                                                                                
-                                </tr>
                                 {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>  
             </div> 
+            
         
 </div>     
 <script>   
