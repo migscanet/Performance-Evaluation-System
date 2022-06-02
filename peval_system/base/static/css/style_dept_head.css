@@ -1,0 +1,168 @@
+*{
+  font-family: 'Trebuchet MS', serif;
+}
+
+.navbar-custom {
+    overflow: hidden;
+    background-color: #751011;
+}
+
+#logo {
+    width: 40px;
+    height: 40px; 
+    margin-left: 10px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+#PES_navbar_label{
+    color: white;
+    display: inline-block;
+    margin-top: 10px; 
+    margin-left: 5px;
+}
+
+#current-user {
+    text-align: "right";
+}
+
+/**----LOGIN PAGE STYLE--**/
+#PES_login_fields_container{
+    background-color: rgba(255, 255, 255, 0.8);
+    font-weight: bold;
+    margin-left: 15px;
+    width: 30%;
+    border-radius: 5px;
+    float: right;
+}
+
+.PES-greenbutton{
+    background-color: #198754;
+    border-radius: 5px;
+    margin-left: 20px;
+    color:white;
+}
+
+#PES_login_forgot_password_link{
+    margin-left: 20px;
+    font-size: 10px;
+}
+
+.form-group{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.btn-success{
+    margin-left: 20px;
+}
+
+/**----CHANGE PASSWORD PAGE STYLE--**/
+#PES_changepassword_fields_container{
+    background-color: rgba(0, 74, 24, 0.5);
+    border-radius: 5px;
+    width: 30%;
+    margin: auto;
+}
+
+#PES_changepassword_buttons{
+    display: flex;
+    align-items: center;
+}
+
+#PES_changepassword_cancel, #PES_changepassword_submit{
+    margin:auto;
+}
+
+/**SIDEBAR**/
+.sidebar {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 185px; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    left: 0;
+    background-color: rgb(0, 48, 30, 0.8); /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 30px;
+  }
+  
+  /* The navigation menu links */
+  .sidebar a {
+    padding: 8px 10px 8px 16px;
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+  }
+  
+  /* When you mouse over the navigation links, change their color */
+  .sidebar a:hover {
+    color: #f1f1f1;
+  }
+
+  .sidebar a:active {
+    background-color: #87906F;
+  }
+  
+  /* Style page content */
+  .main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+  }
+  
+  /* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+
+  .sidebar_inner{
+      margin-left: 10px;
+      background-color:rgba(144, 166, 129, 0.3);
+      margin-right: 10px;
+  }
+  .PES_exitpage{
+      background-color: rgba(135, 0, 0, 0.5);
+  }
+
+.content, h2{
+    align: center;
+    padding-left: 225px;
+}
+
+#filter_table, #view_table{
+    width: 95%;
+    text-align: left;
+    border: none;
+}
+
+#accomplishment_table, #faculty_table, #info_approval_table, #role_approval_table, #assign_table{
+    width: 95%;
+
+}
+
+button {
+    width: 150px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+}
+
+#graph_view, #list_view{
+    width: 100px;
+    height: 28px;
+    border-radius: 8px;
+    border: none;
+}
+
+th{
+    background-color: #f1f1f1;
+    padding:  5px;
+}
+
+td{
+    padding:  5px;
+    text-align:center
+}
+
+

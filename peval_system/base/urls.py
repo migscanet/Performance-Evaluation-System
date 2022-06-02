@@ -55,6 +55,46 @@ urlpatterns =[
     path("add_facultyservrec_clerk/", views.add_facultyservrec_clerk, name='add_facultyservrec_clerk'),
     path("faculty_load/", views.faculty_load, name='faculty_load'),
 
+    path("unithead_dashboard", views.unit_dash_view, name='unithead_dashboard'),
+    path("unithead_dashboard_table", views.unit_table_view,name="unithead_dashboard_table"),
+    path("unithead_faculty_list", views.unit_faculty_view, name='unithead_faculty_list'),
+    path("unithead_role_assignment", views.unit_assignment_view, name='unithead_role_assignment'),
+    path("unithead_pending_approvals", views.unithead_pending_approvals, name='unithead_pending_approvals'),
+
+    path("accomView", views.accomView, name="accomView"),
+    path("deptchair_dashboard", views.dept_dash_view, name='deptchair_dashboard'),
+    path("deptchair_dashboard_table", views.dept_table_view,name="deptchair_dashboard_table"),
+    path("deptchair_faculty_list", views.dept_faculty_view, name='deptchair_faculty_list'),
+    path("deptchair_role_assignment", views.dept_assignment_view, name='deptchair_role_assignment'),
+    path("deptchair_pending_approvals", views.deptchair_pending_approvals, name='deptchair_pending_approvals'),
+    path("deptchair_add_clerk", views.dept_clerk_view, name='deptchair_add_clerk'),
+    path("export_excel_accom", views.export_excel_accom, name="export_excel_accom"),
+
+    path("approve_educ_att/<int:pk>", views.approve_educ_att, name="approve_educ_att"),
+    path("approve_work_exp/<int:pk>", views.approve_work_exp, name="approve_work_exp"),
+    path("approve_acc_events/<int:pk>", views.approve_acc_events, name="approve_acc_events"),
+    path("approve_pub/<int:pk>", views.approve_pub, name="approve_pub"),
+    path("approve_res_grant/<int:pk>", views.approve_res_grant, name="approve_res_grant"),
+    path("approve_licexam/<int:pk>", views.approve_licexam, name="approve_licexam"),
+    path("approve_trainsem/<int:pk>", views.approve_trainsem, name="approve_trainsem"),
+    path("approve_confwork/<int:pk>", views.approve_confwork, name="approve_confwork"),
+    path("approve_extserv/<int:pk>", views.approve_extserv, name="approve_extserv"),
+    path("approve_facservrec/<int:pk>", views.approve_facservrec, name="approve_facservrec"),
+    path("assign_deptchair/<int:pk>", views.assign_deptchair, name="assign_deptchair"),
+    
+    path("verify_educ_att/<int:pk>", views.verify_educ_att, name="verify_educ_att"),
+    path("verify_work_exp/<int:pk>", views.verify_work_exp, name="verify_work_exp"),
+    path("verify_acc_events/<int:pk>", views.verify_acc_events, name="verify_acc_events"),
+    path("verify_pub/<int:pk>", views.verify_pub, name="verify_pub"),
+    path("verify_res_grant/<int:pk>", views.verify_res_grant, name="verify_res_grant"),
+    path("verify_licexam/<int:pk>", views.verify_licexam, name="verify_licexam"),
+    path("verify_trainsem/<int:pk>", views.verify_trainsem, name="verify_trainsem"),
+    path("verify_confwork/<int:pk>", views.verify_confwork, name="verify_confwork"),
+    path("verify_extserv/<int:pk>", views.verify_extserv, name="verify_extserv"),
+    path("verify_facservrec/<int:pk>", views.verify_facservrec, name="verify_facservrec"),
+    path("assign_unithead/<int:pk>", views.assign_unithead, name="assign_unithead"),
+    
+
 ]
 
 urlpatterns += static(settings.UPLOAD_URL, document_root=settings.UPLOAD_ROOT)

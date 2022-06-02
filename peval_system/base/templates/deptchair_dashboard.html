@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Dashboard</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script> 
+        <!-- <link rel="stylesheet" href="{% static '/css/style_dept_head.css' %"> -->
+            <style>
+                .content{
+                    margin-left: 225px;
+                    margin-top: -650px;
+                }
+                table {
+                border-collapse: collapse;
+                border-spacing: 0;
+                width: 95%;
+                height:5%;
+                border: 1px solid #ddd;
+                }
+                th {
+                background-color: #AFAFAF;
+                text-align: center;
+                padding: 4px;
+                }
+                td {
+                    padding: 3.5px;
+                }
+            </style>
+    </head>
+
+<body>
+    {% include '_navbar.html' %}
+    {% include 'sidebar_deptchair.html' %}
+       
+<div class="content">
+    <h2>Accomplishment Count</h2>  
+        
+    <table id="filter_table">
+        <tr>
+            <th style="background-color: white; text-align: left">Department Unit</th>
+            <th style="background-color: white; text-align: left">Start Date</th>
+            <th style="background-color: white; text-align: left">End Date</th>
+            <th style="background-color: white; text-align: left">   </th>
+        </tr>
+        <tr>
+            <td>
+                <select name="dept_unit" id="dept_unit">
+                    <option value="1">Chemistry Unit</option>
+                    <option value="2">Mathematical and Computational Sciences Unit</option>
+                    <option value="3">Physics and Geology Unit</option>
+                </select>
+            </td>
+            <td><input type="date" name="start_date" style="width:225px"></td>
+            <td><input type="date" name="end_date" style="width:225px"></td>
+            <td><button id="filter_button" style="background-color:#0D6EFD"><font style="color:white">Filter</font></button></td>
+        </tr>
+    </table>
+
+    Current view:
+    <button id="list_view" style="background-color:#006100"><font style="color:white">Overview</font></button> 
+    <a role="button" id="list_view" href="{% url 'base:deptchair_dashboard_table' %}">Full List</button>   
+
+    <div id="graph">
+        <canvas id="myChart" width="10" height="10"></canvas>
+            <script>
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Academic Affairs', 'Student Concerns', 'International Linkages', 'Conferences/Workshops', 'Extension Services', 'Research Grants','Publications', 'Planned Activities and Announcements'],
+                    datasets: [{
+                        label: '# of Accomplishments',
+                        data: [{% for number in accom_number %} '{{number}}', {% endfor %}],
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 135, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(151, 102, 132, 1)',
+                            'rgba(153, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 135, 1)',
+                            'rgba(25, 206, 86, 1)',
+                            'rgba(211, 192, 192, 1)',
+                            'rgba(234, 102, 132, 1)',
+                            'rgba(153, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'green',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }] // end of datasets
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            </script>
+    </div>
+</div>
+    
+
+</body>

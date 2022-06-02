@@ -49,14 +49,14 @@ CONFERENCELOCATIONCHOICES=(
 )
 
 ACCOMPLISHMENTREPORTCHOICES=(
-    ('1', 'Academic Affairs'),
-    ('2', 'Student Concerns'),
-    ('3', 'International Linkages'),
-    ('4', 'Conferences/Workshops'),
-    ('5', 'Extension Services (Trainings/Seminars/Workshops conducted)'),
-    ('6', 'Research Grants'),
-    ('7', 'Publications'),
-    ('8', 'Planned Activities and Announcements')
+    ('Academic Affairs', 'Academic Affairs'),
+    ('Student Concerns', 'Student Concerns'),
+    ('International Linkages', 'International Linkages'),
+    ('Conferences/Workshops', 'Conferences/Workshops'),
+    ('Extension Services (Trainings/Seminars/Workshops conducted)', 'Extension Services (Trainings/Seminars/Workshops conducted)'),
+    ('Research Grants', 'Research Grants'),
+    ('Publications', 'Publications'),
+    ('Planned Activities and Announcements', 'Planned Activities and Announcements')
 )
 
 ACADEMICYEARCHOICES=(

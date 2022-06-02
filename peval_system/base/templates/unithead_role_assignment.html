@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Role Assignment</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> 
+
+    <!-- <link rel="stylesheet" href="{% static '/css/style_dept_head.css' %"> -->
+    <style>
+        .content{
+            margin-left: 225px;
+            margin-top: -650px;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 70%;
+            height:5%;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #AFAFAF;
+            text-align: center;
+            padding: 4px;
+        }
+        td {
+            padding: 3.5px;
+        }
+    </style>
+
+</head>
+
+{% include '_navbar.html' %}
+{% include 'sidebar_unithead.html' %}
+
+<body>
+         
+<div class="content">
+    <h2>New Unit Head Assignment</h2>
+   
+        <table id="assign_table">
+            <tr>
+                <th>Incoming Unit Head</th>
+                <th>Status</th>
+            </tr>
+            <tbody>
+               
+                {% for faculty in users %}
+                {% if user.department == faculty.department %}
+                {% if faculty.role != "4" %}
+
+                <tr> 
+                    <td style="text-align: center">
+                       
+                        {{ faculty.first_name }} {{ faculty.last_name }}
+                       
+                    </td>
+                    
+                    <td style="text-align: center">
+                        <a href="{% url 'base:assign_unithead' pk=faculty.pk %}" role="button" onclick="return confirm('Are you sure you want to assign this user? You will be automatically logged out after this action.');"> Assign Unit Head </a>                       
+                    </td>
+                   
+                    
+                </tr>
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+               
+                
+            </tbody>
+            
+        </table>
+</div>
+
+
+</body>
+</html>

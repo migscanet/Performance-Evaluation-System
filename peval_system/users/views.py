@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.contrib import auth, messages
 from users.models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def login(request):
@@ -15,20 +16,29 @@ def login(request):
         
         #role = user.get_role_display
         role = user.role
+
         print(role)
         #is_faculty = user.is_Faculty
         #is_unithead = user.is_UnitHead
         #is_depthead = user.is_DepartmentHead
         if x is not None:
-            print("not none")
-            if role == "1": #Faculty
+            print("not none")            
+            if role == "2" or user.is_UnitHead == True: #Unit Head
                 print(role)
                 auth.login(request, x)
-                return redirect('/profile')	
-            elif role == "4": #Admin Clerk
+                return redirect('/unithead_dashboard')
+            elif role == "3" or user.is_DepartmentHead == True: #Dept Chair
+                print(role)
+                auth.login(request, x)
+                return redirect('/deptchair_dashboard')
+            elif role == "4" or user.is_Admin == True: #Admin Clerk
                 print(role)
                 auth.login(request, x)
                 return redirect('/admin_dash')
+            elif role == "1" or user.is_Faculty == True: #Faculty 
+                print(role)
+                auth.login(request, x)
+                return redirect('/profile')	
             else:
                 return render(request, "login2.html")
             #elif is_unithead == True:
@@ -50,6 +60,7 @@ def logout_user(request):
     logout(request)
     return redirect('/login')
 
+@login_required(login_url='/login',)
 def create_user(request):
     if request.method == "POST":
         form = UserUpdateForm(request.POST)

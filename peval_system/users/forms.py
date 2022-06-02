@@ -45,4 +45,14 @@ class UserUpdateForm(UserCreationForm):
             
             }
 
+class AddClerkForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper(self)
+
+    class Meta:
+
+        model = User
+        exclude = ['password']
+        fields = ['first_name', 'last_name', 'email', 'alternative_email', 'password']
      

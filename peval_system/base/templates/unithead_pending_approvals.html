@@ -1,0 +1,812 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Pending Approvals</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"> 
+
+    <!-- <link rel="stylesheet" href="{% static '/css/style_dept_head.css' %"> -->
+    <style>
+        .content{
+            margin-left: 225px;
+            margin-top: -650px;
+        }
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+            width: 95%;
+            height:5%;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #AFAFAF;
+            text-align: center;
+            padding: 4px;
+        }
+        td {
+            padding: 3.5px;
+        }
+    </style>
+</head>
+{% include '_navbar.html' %}
+{% include 'sidebar_unithead.html' %}
+<body>
+	
+<div class="content">
+    <h2>Pending Approvals</h2>  
+    
+        <h4>Faculty Information</h4>
+        <section class="login-clean min-vh-100" > 
+            <div class="mx-auto" align="center">
+                <button class="tablink" onclick="openPage('EducAtt', this, 'red')" id="defaultOpen">Educational Attainment</button>
+                <button class="tablink" onclick="openPage('WorkExp', this, 'red')">Work Experience</button>
+                <button class="tablink" onclick="openPage('AccEvents', this, 'red')">Accomplishments Events</button>
+                <button class="tablink" onclick="openPage('Pub', this, 'red')">Publications</button>
+                <button class="tablink" onclick="openPage('ResGrants', this, 'red')">Research Grants</button>
+                <button class="tablink" onclick="openPage('LicExam', this, 'red')">Licensure Exam</button>
+                <button class="tablink" onclick="openPage('TrainSem', this, 'red')">Training Seminars</button>
+                <button class="tablink" onclick="openPage('ConfWork', this, 'red')">Conference Workshops</button>
+                <button class="tablink" onclick="openPage('ExtServ', this, 'red')">ExtensionServices</button>
+                <button class="tablink" onclick="openPage('FacServRec', this, 'red')">FacultyServiceRecord</button>
+            </div>       
+            <br>
+            
+            <div id="EducAtt" class="tabcontent"> 
+            <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+               
+                <tr>
+                        <!-- <th> Blood Code </th>   -->
+                        <th> User </th>
+                        <th> Institution </th>                         
+                        <th> Degree </th>
+                        <th> Certification </th>
+                        <th> Major </th>
+                        <th> Specialization </th>
+                        <th> Degree type </th>
+                        <th> Date </th>                    
+                        <th> Proof </th>
+                        <th> Approved </th>
+                        <th> Verified </th>                    
+                        <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>  
+                         
+                        
+                </tr>
+                
+                <tbody>        
+                       
+                        {% for educ_att in EducAtt %}
+                        {% if educ_att.is_verified == False %}
+                        
+                        
+                            
+                            <tr>                  
+                                <!-- <td>{{ blood.blood_code }}</td>    -->
+                                <td>{{ educ_att.user.last_name }}, {{ educ_att.user.first_name }}</td> 
+
+                                <td>{{ educ_att.institution }}</td>                         
+                                <td>{{ educ_att.degree }}</td>
+                                <td>{{ educ_att.certification }}</td>                       
+                                <td>{{ educ_att.major }}</td>
+                                <td>{{ educ_att.specialization }}</td>
+                                <td>{{ educ_att.degree_type }}</td>
+                                <td>{{ educ_att.start_date }} - {{ educ_att.end_date }}</td>
+                                <td>
+                                    <a href="{{educ_att.proof.url}}" target="_blank">
+                                    <img height="100" width="200" src="{{UPLOAD_URL}}{{ educ_att.proof }}">
+                                    </a>
+                                </td>
+                               
+                                <td> 
+                                    {% if educ_att.is_approved == True %}
+                                        &#9989;
+                                    {% else %}
+                                        &#10060;
+                                    {% endif %}
+                                </td>
+                                <td> 
+                                    {% if educ_att.is_verified == True %}
+                                        &#9989;
+                                    {% else %}
+                                        &#10060;
+                                    {% endif %}
+                                </td>                            
+                                <td>{{ educ_att.comments_remarks }}</td>
+                                <td>
+                                    <a href="{% url 'base:verify_educ_att' pk=educ_att.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                </td>
+                                                        
+                                                                                          
+                            </tr>
+                            {% endif %}
+                        {% endfor %}
+                   
+                   
+                </tbody>
+            </table>  
+            </div>
+        
+            <div id="WorkExp" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                   
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Position </th>                         
+                            <th> Employer Name </th>
+                            <th> Is Within</th>
+                            <th> Description </th>
+                            <th> Date </th>
+                            <th> Proof </th>
+                            <th> Approved </th>
+                            <th> Verified </th>
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for work_exp in WorkExp %}
+                            {% if work_exp.is_verified == False %}
+                                                   
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ work_exp.user.last_name }}, {{ work_exp.user.first_name }}</td> 
+
+                                    <td>{{ work_exp.position }}</td>                         
+                                    <td>{{ work_exp.employer_name }}</td>
+                                    <td>{{ work_exp.is_within }}</td>                       
+                                    <td>{{ work_exp.description }}</td>
+                                    <td>{{ work_exp.start_date }} - {{ work_exp.end_date }}</td>
+    
+                                    <td>
+                                        <a href="{{work_exp.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ work_exp.proof }}">
+                                        </a>
+                                    </td>
+                                    <td> 
+                                        {% if work_exp.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if work_exp.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>    
+                                    <td>{{ work_exp.comments_remarks }}</td>
+                                    <td>
+                                        <a href="{% url 'base:verify_work_exp' pk=work_exp.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                    
+                                                                           
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="AccEvents" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                  
+                    <tr>
+                            <th> User </th>
+                            <th> Accomplishment Title </th>                         
+                            <th> Type </th>
+                            <th> Description </th>
+                            <th> Start Date </th>
+                            <th> End Date </th>
+                            <th> Proof </th>   
+                            <th> Approved </th>
+                            <th> Verified </th>
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for acc_event in AccEvent %}
+                            {% if acc_event.is_verified == False %}
+                                                 
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ acc_event.user.last_name }}, {{ acc_event.user.first_name }}</td> 
+
+                                    <td>{{ acc_event.accomplishment_title }}</td>                         
+                                    <td>{{ acc_event.get_type_display }}</td>
+                                    <td>{{ acc_event.description }}</td>                       
+                                    <td>{{ acc_event.start_date }}</td>
+                                    <td>{{ acc_event.end_date }}</td>                                
+                                    <td>
+                                        <a href="{{acc_event.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ acc_event.proof }}">
+                                        </a>
+                                    </td>
+                                    <td> 
+                                        {% if acc_event.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if acc_event.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>    
+                                    <td>{{ acc_event.comments_remarks }}</td>
+                                    <td>
+                                        <a href="{% url 'base:verify_acc_events' pk=acc_event.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                     
+                                   
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="Pub" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                    
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Is DPSM </th>                         
+                            <th> Publication Name </th>
+                            <th> Citation</th>
+                            <th> URL </th>
+                            <th> Date Published </th>
+                            <th> Co-Author DPSM </th>  
+                            <th> Publication Type </th>
+                            <th> Conference Name </th>
+                            <th> Publisher Name </th>
+                            <th> Publisher Type </th>
+                            <th> Publisher Location </th>
+                            <th> Volume Issue Number </th>
+                            <th> Publication URL </th>
+                            <th> Publication DOI </th>
+                            <th> Publication ISBN </th>
+                            <th> Is ISI </th>
+                            <th> Is Elseviers Scropus </th>
+                            <th> Is CHED Recognized </th>
+                            <th> Other Collection </th>
+                            <th> Is Funded Up GAA </th>
+                            <th> UIOB </th>
+                            <th> Proof of Publication </th>
+                            <th> Proof of Utilization </th>
+                            <th> Is presented </th>
+                            <th> Is Approved </th>
+                            <th> Is Verified </th>
+                            <th> Comments Remarks </th>
+                                              
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for pubs in Pub %}
+                            {% if pubs.is_verified == False %}
+                                                
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ pubs.user.last_name }}, {{ pubs.user.first_name }}</td> 
+
+                                    <td>{{ pubs.is_dpsm }}</td>                         
+                                    <td>{{ pubs.publication_name }}</td>
+                                    <td>{{ pubs.citation }}</td>                       
+                                    <td>{{ pubs.url }}</td>
+                                    <td>{{ pubs.date_published }}</td>
+                                    <td>{{ pubs.co_author_DPSM }}</td>
+                                    <td>{{ pubs.get_publication_type_display }}</td>
+                                    <td>{{ pubs.conference_name }}</td>
+                                    <td>{{ pubs.publisher_name }}</td>
+                                    <td>{{ pubs.get_publisher_type_display }}</td>
+                                    <td>{{ pubs.get_publisher_location_display }}</td>
+                                    <td>{{ pubs.volume_issue_num }}</td>
+                                    <td>{{ pubs.publication_url }}</td>
+                                    <td>{{ pubs.publication_doi }}</td>
+                                    <td>{{ pubs.publication_isbn }}</td>
+    
+                                    <td>{{ pubs.is_isi }}</td>
+                                    <td>{{ pubs.is_elseviers_scopus }}</td>
+                                    <td>{{ pubs.is_ched_recognized }}</td>
+                                    <td>{{ pubs.other_collection }}</td>
+                                    <td>{{ pubs.is_funded_up_gaa }}</td>
+                                    <td>{{ pubs.uiob }}</td>
+                                    <td>
+                                        <a href="{{pubs.proof_publication.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ pubs.proof_publication }}">
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{pubs.proof_utilization.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ pubs.proof_utilization }}">
+                                        </a>
+                                    </td>
+                                    
+                                    <td>{{ pubs.is_presented }}</td>
+    
+                                    <td> 
+                                        {% if pubs.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if pubs.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>    
+                                    <td>{{ pubs.comments_remarks }}</td>
+    
+                                    <td>
+                                        <a href="{% url 'base:verify_pub' pk=pubs.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                   
+                                    
+                                    
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+            <div id="ResGrants" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                  
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Co-Author DPSM </th>                         
+                            <th> Is DPSM </th>
+                            <th> Research Name</th>
+                            <th> Sponsor Name </th>
+                            <th> Grant Amount </th>
+                            <th> Project Start </th>
+                            <th> Project End </th>
+                            <th> Actual Start </th>
+                            <th> Actual End </th>
+                            <th> Research Progress </th>
+                            <th> Proof </th>
+                            <th> Is Approved </th>
+                            <th> Is Verified </th>
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for research_grants in ResGrant %}
+                            {% if research_grants.is_verified == False %}
+                           
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ research_grants.user.last_name }}, {{ research_grants.user.first_name }}</td> 
+
+                                    <td>{{ research_grants.co_author_DPSM.first_name }} {{ research_grants.co_author_DPSM.last_name }}</td>                         
+                                    <td>{{ research_grants.is_dpsm }}</td>
+                                    <td>{{ research_grants.research_name }}</td>                       
+                                    <td>{{ research_grants.sponsor_name }}</td>
+                                    <td>{{ research_grants.grant_amount }}</td>
+                                    <td>{{ research_grants.co_author_DPSM }}</td>
+                                    <td>{{ research_grants.project_start_date }}</td>
+                                    <td>{{ research_grants.project_end_date }}</td>
+                                    <td>{{ research_grants.actual_start_date }}</td>
+                                    <td>{{ research_grants.actual_end_date }}</td>
+                                    <td>{{ research_grants.research_progress }}</td>
+                                    
+                                    <td>
+                                        <a href="{{research_grants.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ research_grants.proof }}">
+                                        </a>
+                                    </td>
+                                    <td> 
+                                        {% if research_grants.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if research_grants.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>    
+                                    <td>{{ research_grants.comments_remarks }}</td>
+                                  
+                                    <td>
+                                        <a href="{% url 'base:verify_res_grant' pk=research_grants.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                    
+                                   
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+            <div id="LicExam" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                    
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Exam </th>                         
+                            <th> Rank </th>
+                            <th> Licensure Number</th>
+                            <th> Date </th>
+    
+                            <th> Proof </th>                        
+                            <th> Is Approved </th>
+                            <th> Is Verified </th>                          
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for lic_exams in LicExam %}
+                            {% if lic_exams.is_verified == False %}
+                                                
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ lic_exams.user.last_name }}, {{ lic_exams.user.first_name }}</td> 
+
+                                    <td>{{ lic_exams.exam_name }} </td>                         
+                                    <td>{{ lic_exams.rank }}</td>
+                                    <td>{{ lic_exams.license_number }}</td>                       
+                                    <td>{{ lic_exams.date_exam }}</td>
+                                    
+                                    <td>
+                                        <a href="{{lic_exams.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ lic_exams.proof }}">
+                                        </a>
+                                    </td>
+                                    <td> 
+                                        {% if lic_exams.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if lic_exams.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>   
+                                    <td>{{ lic_exams.comments_remarks }}</td>                               
+                                  
+                                    <td>
+                                        <a href="{% url 'base:verify_licexam' pk=lic_exams.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                   
+                                   
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="TrainSem" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                   
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Training </th>                         
+                            <th> Role </th>
+                            <th> Remarks </th>
+                            <th> Start </th>
+                            <th> End </th>   
+                            <th> Proof </th>                                          
+                            <th> Is Approved </th>
+                            <th> Is Verified </th>          
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for train_sem in TrainSem %}
+                            {% if train_sem.is_verified == False %}
+                                           
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ train_sem.user.last_name }}, {{ train_sem.user.first_name }}</td> 
+
+                                    <td>{{ train_sem.training_name }} </td>                         
+                                    <td>{{ train_sem.role }}</td>
+                                    <td>{{ train_sem.remarks }}</td>                       
+                                    <td>{{ train_sem.start_date }}</td>
+                                    <td>{{ train_sem.end_date }}</td>
+                                    <td>
+                                        <a href="{{train_sem.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ train_sem.proof }}">
+                                        </a>
+                                    </td>
+    
+                                    
+                                    <td> 
+                                        {% if train_sem.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if train_sem.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>   
+                                    <td>{{ train_sem.comments_remarks }}</td>                               
+                                    <td>
+                                        <a href="{% url 'base:verify_trainsem' pk=train_sem.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                                            
+                                   
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="ConfWork" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                   
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Event </th>                         
+                            <th> Paper </th>
+                            <th> Presentation Type</th>
+                            <th> Conference </th>
+                            <th> Organizer </th>
+                            <th> Location </th>
+                            <th> Venue </th>
+                            <th> Start </th>
+                            <th> End </th>
+                            <th> Presentation Date </th>
+                            <th> Fund Source </th>
+                            <th> URIOB </th>
+    
+    
+                            <th> Is Approved </th>
+                            <th> Is Verified </th> 
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>                    
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for conf_work in ConfWork %}
+                            {% if conf_work.is_verified == False %}
+                                           
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ conf_work.user.last_name }}, {{ conf_work.user.first_name }}</td> 
+
+                                    <td>{{ conf_work.event_name }} </td>                         
+                                    <td>{{ conf_work.paper_title }}</td>
+                                    <td>{{ conf_work.get_presentation_type_display }}</td>                       
+                                    <td>{{ conf_work.conference_title }}</td>
+                                    <td>{{ conf_work.organizer_name }}</td>
+                                    <td>{{ conf_work.get_conference_location_display }}</td>
+                                    <td>{{ conf_work.conference_venue }}</td>
+                                    <td>{{ conf_work.conference_title }}</td>
+                                    <td>{{ conf_work.start_date }}</td>
+                                    <td>{{ conf_work.end_date }}</td>
+                                    <td>{{ conf_work.presentation_date }}</td>
+                                    <td>{{ conf_work.fund_source }}</td>
+                                    <td>{{ conf_work.uriob }}</td>
+    
+                                    <td>
+                                        <a href="{{conf_work.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ conf_work.proof }}">
+                                        </a>
+                                    </td>
+                                    
+                                    <td> 
+                                        {% if conf_work.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if conf_work.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td> 
+                                    <td>{{ conf_work.comments_remarks }}</td>                               
+                                    <td>
+                                        <a href="{% url 'base:verify_confwork' pk=conf_work.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                   
+                                    
+                                    
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="ExtServ" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                   
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Training </th>                         
+                            <th> Venue </th>
+                            <th> Date </th>
+                            <th> Number of Participants </th>
+                            <th> Target Beneficiary </th>
+                            <th> Fund Source </th>  
+                            
+                            <th> Proof </th>
+                            <th> Is Approved </th>
+                            <th> Is Verified </th> 
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>   
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for ext_serv in ExtServ %}
+                            {% if ext_serv.is_verified == False %}
+                                                
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ ext_serv.user.last_name }}, {{ ext_serv.user.first_name }}</td> 
+
+                                    <td>{{ ext_serv.training_title }} </td>                         
+                                    <td>{{ ext_serv.venue }}</td>
+                                    <td>{{ ext_serv.date }}</td>                       
+                                    <td>{{ ext_serv.number_participants }}</td>
+                                    <td>{{ ext_serv.target_beneficiary }}</td>
+                                    <td>{{ ext_serv.fund_source }}</td>
+    
+                                    <td>
+                                        <a href="{{ext_serv.proof.url}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ ext_serv.proof }}">
+                                        </a>
+                                    </td>
+                                    
+                                    <td> 
+                                        {% if ext_serv.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>
+                                    <td> 
+                                        {% if ext_serv.is_verified == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td> 
+                                    <td>{{ ext_serv.comments_remarks }}</td>                               
+                                  
+                                    <td>
+                                        <a href="{% url 'base:verify_extserv' pk=ext_serv.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                    
+                                    
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+    
+            <div id="FacServRec" class="tabcontent"> 
+                <table class="table table-hover mx-auto" style="margin-left: 250px; width: 1000px;">
+                  
+                    <tr>
+                            <!-- <th> Blood Code </th>   -->
+                            <th> User </th>
+                            <th> Course Code </th>                         
+                            <th> Section </th>
+                            <th> Semester </th>
+                            <th> School Year </th>
+                            <th> Schedule </th>
+                            <th> Student Enrolled </th>  
+                            
+                            <th> SET </th>
+                            <th> Syllabus </th>
+                            <th> Status </th> 
+                            <th> Comments/Remarks </th>  
+                        <th colspan="2"> Action </th>   
+                    </tr>
+                    
+                    <tbody>                   
+                            {% for fac_servrec in FacServRec %}
+                            {% if fac_servrec.is_verified == False %}
+                                                
+                                <tr>                  
+                                    <!-- <td>{{ blood.blood_code }}</td>    -->
+                                    <td>{{ fac_servrec.user.last_name }}, {{ fac_servrec.user.first_name }}</td> 
+
+                                    <td>{{ fac_servrec.course_code }} </td>                         
+                                    <td>{{ fac_servrec.section }}</td>
+                                    <td>{{ fac_servrec.semester }}</td>                       
+                                    <td>{{ fac_servrec.school_year }}</td>
+                                    <td>{{ fac_servrec.time }} {{ fac_servrec.days }}</td>
+                                    <td>{{ fac_servrec.number_students }}</td>
+    
+                                    <td>{{ fac_servrec.set }}</td>
+                                    <td>
+                                        <a href="{{fac_servrec.syllabus}}" target="_blank">
+                                        <img height="100" width="200" src="{{UPLOAD_URL}}{{ fac_servrec.syllabus }}">
+                                        </a>
+                                    </td>                                
+                                    <td> 
+                                        {% if fac_servrec.is_approved == True %}
+                                            &#9989;
+                                        {% else %}
+                                            &#10060;
+                                        {% endif %}
+                                    </td>                                                             
+                                    <td>{{ fac_servrec.comments_remarks }}</td>                               
+                                  
+                                    <td>
+                                        <a href="{% url 'base:verify_facservrec' pk=fac_servrec.pk %}" role="button" onclick="return confirm('Are you sure you want to approve this credential?');"> Verify </a>                       
+                                    </td>
+                                  
+                                    
+                                                                                                
+                                </tr>
+                                {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>  
+            </div> 
+        
+</div>     
+<script>   
+    function openPage(pageName,elmnt,color) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablink");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].style.backgroundColor = "";
+    }
+    document.getElementById(pageName).style.display = "block";
+    elmnt.style.backgroundColor = color;
+    }
+
+    // Get the element with id="defaultOpen" and click on it
+    document.getElementById("defaultOpen").click();
+</script>
+
+</body>
+</html>
